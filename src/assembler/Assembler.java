@@ -18,12 +18,11 @@ public class Assembler {
     }
 
     public void assemble () {
-        _source.forEach((value) -> {
+        _source.forEach(value -> {
 
             _lexical_scanner.scan(value);
 
         });
-
     }
 
 

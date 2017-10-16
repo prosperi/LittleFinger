@@ -1,42 +1,87 @@
 package assembler;
 
 
+import exceptions.IllegalDirectiveException;
+import exceptions.IllegalLabelException;
+import exceptions.IllegalMnemonicException;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LexicalScanner {
 
     public LexicalScanner () {
+
     }
 
     void scan (String line) {
 
-        Matcher matcher;
-
-        Pattern _directive_pattern = Pattern.compile("^(.*)[ \\t]*(\\.[a-z]+)[ \\t]+([0-9a-zA-Z]+)[ \\t]*(;[ \\t]+.+)?$");
-        Pattern _comment_pattern = Pattern.compile("^[ \\t]*;[ \\t]+.+$");
-        Pattern _label_pattern = Pattern.compile("^[ \\t]*([a-z]+:)[ \\t]*.*(;[ \\t]+.+)?$");
-        Pattern _mnemonic_pattern = Pattern.compile("^[ \\t]*([A-Z]+)[ \\t]+([a-zA-Z0-9#\\]\\[]+,?[ \\t])+([a-zA-Z0-9#\\]\\[]+)[ \\t]*(;[ \\t]+.+)?$");
+        if (checkComment(line) || checkEmptyLine(line)) return ;
 
 
-        matcher = _mnemonic_pattern.matcher(line);
-
-        if (matcher.find()) {
-            System.out.println(matcher.group(1));
-            System.out.println(matcher.group(2));
-            System.out.println(matcher.group(3));
-
-            try {
-//                System.out.println(OpcodeTable.valueOf(matcher.group(1)).instruction().opcode().binary());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            System.out.println("\n\n");
-        }
-
+        checkMnemonic(line);
+        checkDirective(line);
+        checkLabel(line);
 
 
 
     }
+
+    void checkDirective (String line) throws IllegalDirectiveException {
+        Pattern directivePattern = Pattern.compile("^(.*)[ \\t]*\\.([a-z]+)[ \\t]+([0-9a-zA-Z]+)[ \\t]*(;[ \\t]+.+)?$");
+        Matcher matcher = directivePattern.matcher(line);
+
+        if (matcher.find()) {
+            try {
+                DirectiveTable directive = DirectiveTable.valueOf(matcher.group(2).toUpperCase());
+            } catch (IllegalArgumentException e) {
+                throw new IllegalDirectiveException("Illegal directive found, LINE:\t" + line);
+            }
+        }
+    }
+
+    void checkMnemonic (String line) throws IllegalMnemonicException {
+        Pattern mnemonicPattern = Pattern.compile("^[ \\t]*([A-Z]+)[ \\t]+([a-zA-Z0-9#\\]\\[]+,?[ \\t])+([a-zA-Z0-9#\\]\\[]+)[ \\t]*(;[ \\t]+.+)?$");
+        Matcher matcher = mnemonicPattern.matcher(line);
+
+        if (matcher.find()) {
+            try {
+                OpcodeTable mnemonic = OpcodeTable.valueOf(matcher.group(1));
+            } catch (IllegalArgumentException e) {
+                throw new IllegalMnemonicException("Illegal mnemonic found, LINE:\t" + line);
+            }
+        }
+    }
+
+    void checkLabel (String line) throws IllegalLabelException {
+        Pattern labelPattern = Pattern.compile("^[ \\t]*([a-z]+):[ \\t]*.*(;[ \\t]+.+)?$");
+        Matcher matcher = labelPattern.matcher(line);
+
+        if (matcher.find()) {
+            try {
+                LabelTable label = LabelTable.valueOf(matcher.group(1).toUpperCase());
+            } catch (IllegalArgumentException e) {
+                throw new IllegalLabelException("Illegal label found, LINE:\t" + line);
+            }
+        }
+    }
+
+    boolean checkComment (String line) {
+        Pattern commentPattern = Pattern.compile("^[ \\t]*;[ \\t]+.+$");
+        Matcher matcher = commentPattern.matcher(line);
+
+        if (matcher.find()) return true;
+
+        return false;
+    }
+
+    boolean checkEmptyLine (String line) {
+        Pattern emptyLinePattern = Pattern.compile("^\\s*$");
+        Matcher matcher = emptyLinePattern.matcher(line);
+
+        if (matcher.find()) return true;
+
+        return false;
+    }
+
 }
