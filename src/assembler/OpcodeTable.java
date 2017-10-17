@@ -35,7 +35,11 @@ public enum OpcodeTable {
 
     B       (new Instruction("B",       "B",    new Opcode(6,  "000101")        )),
     BR      (new Instruction("BR",      "R",    new Opcode(11, "11010110000")   )),
-    BL      (new Instruction("BL",      "B",    new Opcode(6,  "100101")        ));
+    BL      (new Instruction("BL",      "B",    new Opcode(6,  "100101")        )),
+
+    HALT    (new Instruction("HALT",    "Z",    new Opcode(6,  "100101")        )),
+    NOP     (new Instruction("NOP",     "Z",    new Opcode(6,  "100101")         ));
+
 
 
     private final Instruction _instruction;

@@ -3,6 +3,7 @@ package assembler;
 
 import exceptions.IllegalDirectiveException;
 import exceptions.IllegalLabelException;
+import exceptions.IllegalLittleFingerException;
 import exceptions.IllegalMnemonicException;
 
 import java.util.regex.Matcher;
@@ -16,19 +17,26 @@ public class LexicalScanner {
 
     void scan (String line) {
 
-        if (checkComment(line) || checkEmptyLine(line)) return ;
+        boolean comment, emptyLine, mnemonic, directive, label;
+
+        comment = checkComment(line);
+        emptyLine = checkEmptyLine(line);
+
+        if (comment || emptyLine) return ;
 
 
-        checkMnemonic(line);
-        checkDirective(line);
-        checkLabel(line);
+        mnemonic = checkMnemonic(line);
+        directive = checkDirective(line);
+        label = checkLabel(line);
 
+        if (!(mnemonic || directive || label))
+            throw new IllegalLittleFingerException("\u001B[36m Illegal little-finger found, LINE:\t \u001B[0m" + line);
 
 
     }
 
-    void checkDirective (String line) throws IllegalDirectiveException {
-        Pattern directivePattern = Pattern.compile("^(.*)[ \\t]*\\.([a-z]+)[ \\t]+([0-9a-zA-Z]+)[ \\t]*(;[ \\t]+.+)?$");
+    boolean checkDirective (String line) throws IllegalDirectiveException {
+        Pattern directivePattern = PatternTable.DIRECTIVE.pattern();
         Matcher matcher = directivePattern.matcher(line);
 
         if (matcher.find()) {
@@ -37,11 +45,15 @@ public class LexicalScanner {
             } catch (IllegalArgumentException e) {
                 throw new IllegalDirectiveException("Illegal directive found, LINE:\t" + line);
             }
+
+            return true;
         }
+
+        return false;
     }
 
-    void checkMnemonic (String line) throws IllegalMnemonicException {
-        Pattern mnemonicPattern = Pattern.compile("^[ \\t]*([A-Z]+)[ \\t]+([a-zA-Z0-9#\\]\\[]+,?[ \\t])+([a-zA-Z0-9#\\]\\[]+)[ \\t]*(;[ \\t]+.+)?$");
+    boolean checkMnemonic (String line) throws IllegalMnemonicException {
+        Pattern mnemonicPattern = PatternTable.MNEMONIC.pattern();
         Matcher matcher = mnemonicPattern.matcher(line);
 
         if (matcher.find()) {
@@ -50,11 +62,15 @@ public class LexicalScanner {
             } catch (IllegalArgumentException e) {
                 throw new IllegalMnemonicException("Illegal mnemonic found, LINE:\t" + line);
             }
+
+            return true;
         }
+
+        return false;
     }
 
-    void checkLabel (String line) throws IllegalLabelException {
-        Pattern labelPattern = Pattern.compile("^[ \\t]*([a-z]+):[ \\t]*.*(;[ \\t]+.+)?$");
+    boolean checkLabel (String line) throws IllegalLabelException {
+        Pattern labelPattern = PatternTable.LABEL.pattern();
         Matcher matcher = labelPattern.matcher(line);
 
         if (matcher.find()) {
@@ -63,11 +79,15 @@ public class LexicalScanner {
             } catch (IllegalArgumentException e) {
                 throw new IllegalLabelException("Illegal label found, LINE:\t" + line);
             }
+
+            return true;
         }
+
+        return false;
     }
 
     boolean checkComment (String line) {
-        Pattern commentPattern = Pattern.compile("^[ \\t]*;[ \\t]+.+$");
+        Pattern commentPattern = PatternTable.COMMENT.pattern();
         Matcher matcher = commentPattern.matcher(line);
 
         if (matcher.find()) return true;
@@ -76,7 +96,7 @@ public class LexicalScanner {
     }
 
     boolean checkEmptyLine (String line) {
-        Pattern emptyLinePattern = Pattern.compile("^\\s*$");
+        Pattern emptyLinePattern = PatternTable.EMPTY_LINE.pattern();
         Matcher matcher = emptyLinePattern.matcher(line);
 
         if (matcher.find()) return true;
