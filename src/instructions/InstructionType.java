@@ -1,6 +1,6 @@
 package instructions;
 
-public interface InstructionType {
-    String binary ();
-    String hex ();
+public abstract class InstructionType {
+    public abstract String binary ();
+    public abstract String hex();
 }

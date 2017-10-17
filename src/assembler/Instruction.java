@@ -1,12 +1,12 @@
 package assembler;
 
 public class Instruction {
-    private String _mnemonic;
+    private String _value;
     private String _format;
     private Opcode _opcode;
 
-    public Instruction (String m, String f, Opcode o) {
-        _mnemonic = m;
+    public Instruction (String v, String f, Opcode o) {
+        _value = v;
         _format = f;
         _opcode = o;
     }

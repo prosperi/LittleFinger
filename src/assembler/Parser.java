@@ -2,14 +2,17 @@ package assembler;
 
 import helpers.Converter;
 import instructions.InstructionR;
+import instructions.InstructionType;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Parser {
 
-    public Parser () {
+    private String _header;
 
+    public Parser () {
+        _header = "#hex:";
     }
 
     void parse (String line) {
@@ -24,16 +27,15 @@ public class Parser {
         if (matcher.find()) {
             switch (DirectiveTable.valueOf(matcher.group(2).toUpperCase())) {
                 case WORDSIZE:
-                    System.out.println("#hex:WS-" + matcher.group(3));
+                    _header += "WS-" + matcher.group(3);
                     break;
                 case REGCNT:
-                    System.out.println("RC-" + matcher.group(3));
+                    _header += "RC-" + matcher.group(3);
                     break;
                 case MAXMEM:
-                    System.out.println("MM-" + matcher.group(3));
+                    _header += "MM-" + matcher.group(3);
                     break;
                 default:
-                    System.out.println("hello some other thing");
                     break;
             }
         }
@@ -45,34 +47,42 @@ public class Parser {
 
         if (matcher.find()) {
             Instruction instruction = OpcodeTable.valueOf(matcher.group(1)).instruction();
+            InstructionType instructionType = null;
 
             switch (instruction.format()) {
                 case "R":
-                    handleRType(line, instruction);
+                    instructionType = handleRType(line, instruction);
                     break;
                 default:
-                    System.out.println("It is not R");
                     break;
             }
+
+            if (instructionType != null) System.out.println(instructionType.binary());
         }
     }
 
-    void handleRType (String line, Instruction instruction) {
+    InstructionType handleRType (String line, Instruction instruction) {
         Matcher rType = PatternTable.R_TYPE.pattern().matcher(line);
         rType.find();
 
-        int rm = Integer.parseInt(rType.group(3));
-        int shamt = 0;
-        int rn = Integer.parseInt(rType.group(5));
-        int rd = Integer.parseInt(rType.group(7));
+        String shamt = "000000";
+        String rd = Converter.decimalToBinary(Integer.parseInt(rType.group(3)));
+        String rn = Converter.decimalToBinary(Integer.parseInt(rType.group(5)));
+        String rm = Converter.decimalToBinary(Integer.parseInt(rType.group(7)));
 
-        Converter.decimalToBinary(rm);
-        Converter.decimalToBinary(rn);
-        Converter.decimalToBinary(rd);
-
-
-        InstructionR r = new InstructionR(instruction.opcode().binary(), "", "", "", "");
+        InstructionR r = new InstructionR(instruction.opcode().binary(), rm, shamt, rn, rd);
+        return r;
     }
+
+    InstructionType handleIType (String line, Instruction instruction) {
+        return null;
+    }
+
+
+    public String header () {
+        return this._header;
+    }
+
 
 
 }

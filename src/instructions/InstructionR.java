@@ -1,6 +1,6 @@
 package instructions;
 
-public class InstructionR implements InstructionType {
+public class InstructionR extends InstructionType {
 
     private String  _opcode ,
                     _rm     ,
