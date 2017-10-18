@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 public class Main {
     public static void main(String[] args) {
 
-        String fileName = "./src/files/code_01.as";
+        String fileName = "./src/files/cbtype.as";
 
         try (Stream<String> source = Files.lines(Paths.get(fileName))) {
 

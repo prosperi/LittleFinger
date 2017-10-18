@@ -1,6 +1,8 @@
 package instructions;
 
-public class InstructionR extends InstructionType {
+import helpers.Converter;
+
+public class InstructionR extends Instruction {
 
     private String  _opcode ,
                     _rm     ,
@@ -22,6 +24,6 @@ public class InstructionR extends InstructionType {
     }
 
     public String hex () {
-        return "";
+        return Converter.binaryToHex(this.binary());
     }
 }
