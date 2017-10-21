@@ -32,22 +32,17 @@ public class Assembler {
             scan(value);
 
             String parsed = parse(value);
-            if (parsed.equals("")) return;
 
-            if (parsed.length() >= 4 && parsed.substring(0, 4).equals("pos:")) {
-                lc(Integer.parseInt(parsed.split("pos:")[1]));
-                return;
-            } else if (parsed.length() >= 5 &&  parsed.substring(0, 6).equals("align:")) {
-                align(Integer.parseInt(parsed.split("align:")[1]));
-                return;
-            }
+            if (parsed.equals("")) return;
+            if (checkParsed(parsed)) return;
 
             _output += parsed;
             _lc += parsed.length() / 2;
         });
 
         format();
-        _output = _parser.header() + '\n' + _output;
+        _output = _parser.header() + _output;
+        _symbol_table.display();
 
         return _output;
     }
@@ -64,6 +59,21 @@ public class Assembler {
         return _parser.parse(line);
     }
 
+    public boolean checkParsed (String parsed) {
+        if (parsed.length() >= 4 && parsed.substring(0, 4).equals("pos:")) {
+            lc(Integer.parseInt(parsed.split("pos:")[1]));
+            return true;
+        } else if (parsed.length() >= 6 &&  parsed.substring(0, 6).equals("align:")) {
+            align(Integer.parseInt(parsed.split("align:")[1]));
+            return true;
+        } else if (parsed.length() >= 6 &&  parsed.substring(0, 6).equals("label:")) {
+            label(parsed.split("label:")[1]);
+            return true;
+        }
+
+        return false;
+    }
+
     public int lc (int position) {
 
         while (_lc < position) {
@@ -78,7 +88,7 @@ public class Assembler {
         String tmp = "";
         for (int i = 0; i < _output.length(); i++) {
             if (i % 16 == 0) tmp += "\n" + _output.charAt(i) ;
-            else if(i % 8 == 0) tmp += " " + _output.charAt(i);
+            else if(i % 8 == 0) tmp += _output.charAt(i);
             else tmp += _output.charAt(i);
         }
 
@@ -88,10 +98,16 @@ public class Assembler {
     }
 
     public void align (int i) {
+        System.out.println("Current Location: \t" + _lc + " and need divisible by: \t" + i);
         while (_lc % i != 0) {
             _lc++;
             _output += "0";
         }
+        System.out.println("Current new Location: \t" + _lc);
+    }
+
+    public void label (String l) {
+        _symbol_table.address(l, _lc);
     }
 
 }

@@ -23,6 +23,22 @@ public class Parser {
         parsed = parseMnemonic(line);
         if (!parsed.equals("")) return parsed;
 
+        parsed = parseLabel(line);
+        if (!parsed.equals("")) return parsed;
+
+        return "";
+    }
+
+    String parseLabel (String line) {
+        Pattern labelPattern = PatternTable.LABEL.pattern();
+        Matcher matcher = labelPattern.matcher(line);
+        String output = "";
+
+        if (matcher.find()) {
+            System.out.println("Label:\t" + matcher.group(1));
+            return "label:" + matcher.group(1);
+        }
+
         return "";
     }
 
@@ -43,7 +59,7 @@ public class Parser {
                     _header += ":MM-" + matcher.group(3);
                     break;
                 case ALIGN:
-                    int align = Converter.hexToDecimal(matcher.group(3));
+                    int align = Integer.parseInt(matcher.group(3));
                     output = "align:" + align;
                     break;
                 case DOUBLE:

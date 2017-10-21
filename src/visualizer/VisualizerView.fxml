@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Rectangle arcWidth="5.0" height="640.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="960.0">
+            <fill>
+                <LinearGradient cycleMethod="REPEAT" endX="1.0" endY="1.0">
+                    <stops>
+                        <Stop color="#1f93ff" />
+                        <Stop color="#50a08a" offset="0.007434944237918215" />
+                        <Stop color="#3b718f" offset="1.0" />
+                    </stops>
+                </LinearGradient>
+            </fill>
+        </Rectangle>
+        <Pane layoutX="3.0" layoutY="3.0" prefHeight="633.0" prefWidth="953.0">
+            <children>
+                <Pane id="loadBtn" fx:id="loadBtn" layoutX="553.0" layoutY="570.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3498dbb0" height="46.0" stroke="#2c3e50" strokeType="INSIDE" width="118.0" x="8.0">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Rectangle>
+                        <Text fill="WHITE" layoutX="45.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Load">
+                            <font>
+                                <Font name="Monaco" size="16.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Text>
+                    </children>
+                </Pane>
+                <Pane layoutX="61.0" layoutY="412.0" />
+                <CheckBox id="binary" fx:id="binary" layoutX="19.0" layoutY="284.0" mnemonicParsing="false" text="Binary" />
+                <CheckBox id="hex" fx:id="hex" layoutX="132.0" layoutY="285.0" mnemonicParsing="false" text="Hex" />
+                <Group layoutX="-141.0">
+                    <children>
+                        <TextField id="start" fx:id="start" layoutX="157.0" layoutY="162.0" promptText="0x0" />
+                        <Label layoutX="158.0" layoutY="138.0" text="Starting Address" />
+                    </children>
+                </Group>
+                <Group layoutX="-142.0" layoutY="66.0">
+                    <children>
+                        <TextField id="end" fx:id="end" layoutX="157.0" layoutY="162.0" promptText="0x100" />
+                        <Label layoutX="158.0" layoutY="138.0" text="Ending Address" />
+                    </children>
+                </Group>
+                <Pane id="filterBtn" fx:id="filterBtn" layoutX="20.0" layoutY="336.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3498dbb0" height="27.0" layoutX="8.0" stroke="#2c3e50" strokeType="INSIDE" width="103.0" x="8.0">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Rectangle>
+                        <Text fill="WHITE" layoutX="46.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter">
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                            <font>
+                                <Font name="Monaco" size="12.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </Pane>
+                <ScrollPane layoutX="201.0" layoutY="44.0" prefHeight="500.0" prefWidth="750.0">
+                    <content>
+                        <Pane>
+                            <children>
+                                <GridPane fx:id="grid" layoutX="20.0" layoutY="18.0" maxHeight="466.0" maxWidth="705.0" prefHeight="466.0" prefWidth="705.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" minWidth="10.0" prefWidth="150.0" />
+                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    </columnConstraints>
+                                </GridPane>
+                            </children>
+                        </Pane>
+                    </content>
+                </ScrollPane>
+            </children>
+        </Pane>
+    </children>
+</Pane>

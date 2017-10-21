@@ -1,4 +1,4 @@
-.wordsize 16              ; sets the machine wordsize
+.wordsize 64              ; sets the machine wordsize
 .regcnt    4              ; 4 general purpose registers
 .maxmem   0x10000000      ; max memory size is 32 bytes
 
@@ -10,7 +10,7 @@ main:
        HALT               ; halt the processor
 
 .pos 0x100                ; set image location to 0x100
-.align 8                  ; align data to an 8-byte boundry
+.align 8                  ; align data to an 8-byte boundary
 
 ; this is a comment
 
@@ -21,5 +21,8 @@ data:
         .half   0x0AB     ; place 0xAB in a 2-byte location
         .byte   0x0AB     ; place 0xAB in a 1-byte location
 
+; B data
+
 .pos 0x200                ; set the image location to 0x200
-stack:  .double 0xDEF     ; start the stack here and create an 8-byte data value
+stack:
+    .double 0xDEF     ; start the stack here and create an 8-byte data value

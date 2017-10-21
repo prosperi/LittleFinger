@@ -7,7 +7,6 @@ public final class Converter {
     }
 
     public static String decimalToBinary (int decimal) {
-        System.out.println("Converted decimal: " + decimal);
         String output = "";
         while (decimal > 0) {
             output += decimal % 2;
@@ -15,7 +14,6 @@ public final class Converter {
         }
 
         String reversed = new StringBuilder(output).reverse().toString();
-        System.out.println("\t to: \t" + reversed);
         return reversed;
     }
 
@@ -25,8 +23,6 @@ public final class Converter {
         for (int i = binary.length(); i < size; i++) {
             binary = "0" + binary;
         }
-
-        System.out.println("Converted decimal: " + decimal + " size: " + size + " to: \t" + binary);
 
         return binary;
     }
@@ -46,21 +42,8 @@ public final class Converter {
         return output;
     }
 
-    public static int hexToDecimal (int hex) {
-        int decimal = 0;
-        int i = 0;
-
-        while (hex > 0) {
-            decimal += hex % 10 * Math.pow(16, i);
-            hex /= 10;
-            i++;
-        }
-
-        return decimal;
-    }
-
-    public static int hexToDecimal (String hex) {
-        return hexToDecimal(Integer.parseInt(hex));
+    public static int hexToDecimal (String h) {
+        return Integer.valueOf(h, 16);
     }
 
     public static String hexToBinary (String hex) {
@@ -80,6 +63,21 @@ public final class Converter {
         }
 
         return hex;
+    }
+
+    public static String decimalToHex (int decimal) {
+        String output = "";
+        String hex = "0123456789ABCDEF";
+
+        while (decimal > 0) {
+            output += hex.charAt(decimal % 16);
+            decimal /= 16;
+        }
+
+        if (output.length() == 0) output = "0";
+
+        String reversed = new StringBuilder(output).reverse().toString();
+        return "0x" + reversed;
     }
 
 }
