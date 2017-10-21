@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Rectangle arcWidth="5.0" height="640.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="960.0">
+            <fill>
+                <LinearGradient cycleMethod="REPEAT" endX="1.0" endY="1.0">
+                    <stops>
+                        <Stop color="#1f93ff" />
+                        <Stop color="#50a08a" offset="0.007434944237918215" />
+                        <Stop color="#3b718f" offset="1.0" />
+                    </stops>
+                </LinearGradient>
+            </fill>
+        </Rectangle>
+        <!--<ImageView fitHeight="40.0" fitWidth="31.0" layoutX="1.0" layoutY="1.0" opacity="0.44" pickOnBounds="true" preserveRatio="true">-->
+            <!--<image>-->
+                <!--<Image url="@jay.png" />-->
+            <!--</image>-->
+        <!--</ImageView>-->
+        <Pane layoutX="470.0" layoutY="50.0" prefHeight="540.0" prefWidth="480.0">
+            <children>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bf382cb0" height="30.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="480.0" />
+                <Text fill="WHITE" layoutX="217.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Code">
+                    <font>
+                        <Font name="Monaco" size="16.0" />
+                    </font>
+                </Text>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff7b" height="500.0" layoutY="38.0" stroke="#2c3e50b5" strokeType="INSIDE" strokeWidth="3.0" width="480.0" />
+                <TextArea layoutX="15.0" layoutY="65.0" prefHeight="450.0" prefWidth="450.0">
+                    <font>
+                        <Font name="Monaco" size="12.0" />
+                    </font>
+                    <effect>
+                        <InnerShadow color="#3b7393" />
+                    </effect>
+                </TextArea>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bf382cb0" height="30.0" layoutX="165.0" layoutY="555.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="150.0" x="8.0">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Rectangle>
+                <Text fill="WHITE" layoutX="205.0" layoutY="575.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Assemble" wrappingWidth="101.3609619140625">
+                    <font>
+                        <Font name="Monaco" size="16.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Text>
+            </children>
+        </Pane>
+        <Pane layoutX="8.0" layoutY="43.0" prefHeight="590.0" prefWidth="451.0">
+            <children>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bf382cb0" height="31.0" layoutX="2.0" layoutY="7.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="350.0" />
+                <Text fill="WHITE" layoutX="122.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CPU / MEMORY">
+                    <font>
+                        <Font name="Monaco" size="16.0" />
+                    </font>
+                </Text>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#16a085cf" height="30.0" layoutX="353.0" layoutY="144.0" stroke="#2c3e50" strokeType="INSIDE" width="81.0" x="8.0">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Rectangle>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3498dbb0" height="30.0" layoutX="352.0" layoutY="202.0" stroke="#2c3e50" strokeType="INSIDE" width="81.0" x="8.0">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Rectangle>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bf382cb0" height="30.0" layoutX="353.0" layoutY="259.0" stroke="#2c3e50" strokeType="INSIDE" width="81.0" x="8.0">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Rectangle>
+                <Text fill="WHITE" layoutX="386.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Step">
+                    <font>
+                        <Font name="Monaco" size="12.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Text>
+                <Text fill="WHITE" layoutX="391.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Run">
+                    <font>
+                        <Font name="Monaco" size="12.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Text>
+                <Text fill="WHITE" layoutX="383.0" layoutY="279.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reset">
+                    <font>
+                        <Font name="Monaco" size="12.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Text>
+                <Circle fill="#e54a3c85" layoutX="402.0" layoutY="329.0" radius="25.0" stroke="#2c3e50" strokeType="INSIDE">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Circle>
+                <Text fill="WHITE" layoutX="386.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stop" wrappingWidth="36.005859375">
+                    <font>
+                        <Font name="Monaco" size="12.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Text>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bf382cb0" height="31.0" layoutX="4.0" layoutY="450.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="350.0" />
+                <Text fill="WHITE" layoutX="152.0" layoutY="471.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Labels">
+                    <font>
+                        <Font name="Monaco" size="16.0" />
+                    </font>
+                </Text>
+                <GridPane layoutX="7.0" layoutY="492.0" maxHeight="90.0" maxWidth="350.0" prefHeight="90.0" prefWidth="350.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="31.2503662109375" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="35.00146484375" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+                            <font>
+                                <Font name="Monaco" size="12.0" />
+                            </font>
+                        </Text>
+                        <Text layoutX="10.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address" GridPane.columnIndex="1">
+                            <font>
+                                <Font name="Monaco" size="12.0" />
+                            </font>
+                        </Text>
+                        <Text layoutX="126.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Value" GridPane.columnIndex="2">
+                            <font>
+                                <Font name="Monaco" size="12.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </GridPane>
+            </children>
+        </Pane>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff7b" height="400.0" layoutX="10.0" layoutY="84.0" stroke="#2c3e50b5" strokeType="INSIDE" strokeWidth="3.0" width="350.0" />
+        <GridPane layoutX="35.0" layoutY="178.0" maxHeight="300.0" maxWidth="300.0" prefHeight="300.0" prefWidth="300.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="00" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="00" GridPane.columnIndex="1" />
+                <Text layoutX="11.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" GridPane.columnIndex="2" />
+                <Text layoutX="11.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" GridPane.columnIndex="3" />
+                <Text layoutX="64.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" GridPane.columnIndex="4" />
+                <Text layoutX="11.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" GridPane.columnIndex="5" />
+                <Text layoutX="28.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" GridPane.columnIndex="6" />
+                <Text layoutX="46.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" GridPane.columnIndex="7" />
+                <Text layoutX="64.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" GridPane.columnIndex="8" />
+                <Text layoutX="11.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" GridPane.columnIndex="9" />
+                <Text layoutX="28.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" GridPane.columnIndex="10" />
+                <Text layoutX="46.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" GridPane.columnIndex="11" />
+                <Text layoutX="82.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" GridPane.columnIndex="12" />
+                <Text layoutX="64.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" GridPane.columnIndex="13" />
+                <Text layoutX="11.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" GridPane.columnIndex="14" />
+                <Text layoutX="28.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" GridPane.columnIndex="15" />
+            </children>
+        </GridPane>
+        <Text fill="#c0392b" layoutX="20.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RAM">
+            <font>
+                <Font name="Monaco" size="14.0" />
+            </font>
+        </Text>
+        <GridPane alignment="CENTER" layoutX="20.0" layoutY="106.0" prefHeight="45.0" prefWidth="330.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="R1" />
+                <Text layoutX="10.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R2" GridPane.columnIndex="1" />
+                <Text layoutX="10.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R3" GridPane.columnIndex="2" />
+                <Text layoutX="10.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R4" GridPane.columnIndex="3" />
+                <Text layoutX="10.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IP" GridPane.columnIndex="4" />
+                <Text layoutX="10.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SP" GridPane.columnIndex="5" />
+                <Text layoutX="10.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Z" GridPane.columnIndex="6" />
+                <Text layoutX="10.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="C" GridPane.columnIndex="7" />
+                <Text layoutX="10.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="F" GridPane.columnIndex="8" />
+            </children>
+        </GridPane>
+        <Text fill="#c0392b" layoutX="18.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registers / Flags">
+            <font>
+                <Font name="Monaco" size="14.0" />
+            </font>
+        </Text>
+    </children>
+</Pane>

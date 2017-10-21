@@ -11,36 +11,66 @@ public class Parser {
     private String _header;
 
     public Parser () {
-        _header = "#hex:";
+        _header = "#hex";
     }
 
-    void parse (String line) {
-        parseDirective(line);
-        parseMnemonic(line);
+    String parse (String line) {
+        String parsed = "";
+
+        parsed = parseDirective(line);
+        if (!parsed.equals("")) return parsed;
+
+        parsed = parseMnemonic(line);
+        if (!parsed.equals("")) return parsed;
+
+        return "";
     }
 
-    void parseDirective (String line) {
+    String parseDirective (String line) {
         Pattern directivePattern = PatternTable.DIRECTIVE.pattern();
         Matcher matcher = directivePattern.matcher(line);
+        String output = "";
 
         if (matcher.find()) {
             switch (DirectiveTable.valueOf(matcher.group(2).toUpperCase())) {
                 case WORDSIZE:
-                    _header += "WS-" + matcher.group(3);
+                    _header += ":WS-" + matcher.group(3);
                     break;
                 case REGCNT:
-                    _header += "RC-" + matcher.group(3);
+                    _header += ":RC-" + matcher.group(3);
                     break;
                 case MAXMEM:
-                    _header += "MM-" + matcher.group(3);
+                    _header += ":MM-" + matcher.group(3);
+                    break;
+                case ALIGN:
+                    int align = Converter.hexToDecimal(matcher.group(3));
+                    output = "align:" + align;
+                    break;
+                case DOUBLE:
+                    output = Converter.formatHex(matcher.group(3).split("0x")[1], 16);
+                    break;
+                case SINGLE:
+                    output = Converter.formatHex(matcher.group(3).split("0x")[1], 8);
+                    break;
+                case HALF:
+                    output = Converter.formatHex(matcher.group(3).split("0x")[1], 4);
+                    break;
+                case BYTE:
+                    output = Converter.formatHex(matcher.group(3).split("0x")[1], 2);
+                    break;
+                case POS:
+                    int pos = Converter.hexToDecimal(matcher.group(3).split("0x")[1]);
+                    output = "pos:" + pos;
                     break;
                 default:
                     break;
             }
         }
+
+        return output;
     }
 
-    void parseMnemonic (String line) {
+    String parseMnemonic (String line) {
         Pattern mnemonicPattern = PatternTable.MNEMONIC.pattern();
         Matcher matcher = mnemonicPattern.matcher(line);
 
@@ -70,10 +100,13 @@ public class Parser {
                     break;
             }
 
-            if (instruction != null){
-                System.out.println("binary: " + instruction.binary() + "\t hex: " + instruction.hex());
-            }
+
+            if (instruction != null)
+                System.out.println("Parsed line " + line + "\n\t" + instruction.binary());
+                return instruction.hex();
         }
+
+        return "";
     }
 
     Instruction handleRType (String line, Mnemonic mnemonic) {
@@ -117,7 +150,7 @@ public class Parser {
         String op = "00";
         String rt = Converter.decimalToBinary(Integer.parseInt(dType.group(3)), 5);
         String rn = Converter.decimalToBinary(Integer.parseInt(dType.group(5)), 5);
-        String dt = Converter.decimalToBinary(Integer.parseInt(dType.group(7)), 12);
+        String dt = Converter.decimalToBinary(Integer.parseInt(dType.group(7)), 9);
 
         Instruction i = new InstructionD(mnemonic.opcode().binary(), dt, op, rn, rt);
 
@@ -149,13 +182,17 @@ public class Parser {
         Matcher cbType = PatternTable.CB_TYPE.pattern().matcher(line);
         cbType.find();
 
-        System.out.println(cbType.group(1) + " | " + cbType.group(2) + " | " + cbType.group(3) + " | ");
+        String rt = Converter.decimalToBinary(Integer.parseInt(cbType.group(3)), 5);
+        String address = Converter.decimalToBinary(Integer.parseInt(cbType.group(5)), 19);
+
+        InstructionCB i = new InstructionCB(mnemonic.opcode().binary(), address, rt);
+
+        return i;
     }
 
     public String header () {
         return this._header;
     }
-
 
 
 }

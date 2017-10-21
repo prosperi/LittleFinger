@@ -3,7 +3,6 @@ package assembler;
 public enum LabelTable {
 
     MAIN    ("main:")   ,
-    DATA    ("data:")   ,
     STACK   ("stack:")  ,
     HEAP    ("heap:")   ;
 

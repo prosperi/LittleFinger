@@ -37,8 +37,8 @@ public enum OpcodeTable {
     BR      (new Mnemonic("BR",      "R",    new Opcode(11, "11010110000")   )),
     BL      (new Mnemonic("BL",      "B",    new Opcode(6,  "100101")        )),
 
-    HALT    (new Mnemonic("HALT",    "Z",    new Opcode(6,  "100101")        )),
-    NOP     (new Mnemonic("NOP",     "Z",    new Opcode(6,  "100101")        ));
+    HALT    (new Mnemonic("HALT",    "Z",    new Opcode(32,  "11110010111111111111111111111110")    )),
+    NOP     (new Mnemonic("NOP",     "Z",    new Opcode(32,  "11110010111111111111111111111111")    ));
 
 
 

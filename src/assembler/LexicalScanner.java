@@ -74,11 +74,12 @@ public class LexicalScanner {
         Matcher matcher = labelPattern.matcher(line);
 
         if (matcher.find()) {
-            try {
+            //z/
+            /*try {
                 LabelTable label = LabelTable.valueOf(matcher.group(1).toUpperCase());
             } catch (IllegalArgumentException e) {
                 throw new IllegalLabelException("Illegal label found, LINE:\t" + line);
-            }
+            }*/
 
             return true;
         }

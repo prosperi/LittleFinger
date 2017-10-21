@@ -1,5 +1,6 @@
 package assembler;
 
+import java.util.ArrayList;
 import java.util.stream.Stream;
 
 public class Assembler {
@@ -11,10 +12,14 @@ public class Assembler {
     private SymbolTable _symbol_table;
 
     private Stream<String> _source;
+    private String _output;
+    private int _lc;
 
     public Assembler (Stream<String> s) {
 
         _source = s;
+        _output = "";
+        _lc = 0;
 
         _lexical_scanner = new LexicalScanner();
         _parser = new Parser();
@@ -22,13 +27,29 @@ public class Assembler {
 
     }
 
-    public void assemble () {
+    public String assemble () {
         _source.forEach(value -> {
-
             scan(value);
-            parse(value);
 
+            String parsed = parse(value);
+            if (parsed.equals("")) return;
+
+            if (parsed.length() >= 4 && parsed.substring(0, 4).equals("pos:")) {
+                lc(Integer.parseInt(parsed.split("pos:")[1]));
+                return;
+            } else if (parsed.length() >= 5 &&  parsed.substring(0, 6).equals("align:")) {
+                align(Integer.parseInt(parsed.split("align:")[1]));
+                return;
+            }
+
+            _output += parsed;
+            _lc += parsed.length() / 2;
         });
+
+        format();
+        _output = _parser.header() + '\n' + _output;
+
+        return _output;
     }
 
     void scan (String line) {
@@ -39,9 +60,38 @@ public class Assembler {
         }
     }
 
-    void parse (String line) {
-        _parser.parse(line);
+    public String parse (String line) {
+        return _parser.parse(line);
     }
 
+    public int lc (int position) {
+
+        while (_lc < position) {
+            this. _output += "00";
+            _lc++;
+        }
+
+        return _lc;
+    }
+
+    public String  format () {
+        String tmp = "";
+        for (int i = 0; i < _output.length(); i++) {
+            if (i % 16 == 0) tmp += "\n" + _output.charAt(i) ;
+            else if(i % 8 == 0) tmp += " " + _output.charAt(i);
+            else tmp += _output.charAt(i);
+        }
+
+        _output = tmp;
+
+        return _output;
+    }
+
+    public void align (int i) {
+        while (_lc % i != 0) {
+            _lc++;
+            _output += "0";
+        }
+    }
 
 }
