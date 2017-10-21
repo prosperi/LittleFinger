@@ -43,7 +43,7 @@ public final class Converter {
     }
 
     public static int hexToDecimal (String h) {
-        return Integer.valueOf(h, 16);
+        return Integer.parseInt(h, 16);
     }
 
     public static String hexToBinary (String hex) {
