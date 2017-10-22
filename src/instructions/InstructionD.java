@@ -18,6 +18,14 @@ public class InstructionD extends Instruction {
         _rt = rt;
     }
 
+    public InstructionD (String binary) {
+        _opcode = binary.substring(0, 11);
+        _dt = binary.substring(11, 20);
+        _op = binary.substring(20, 22);
+        _rn = binary.substring(22, 27);
+        _rt = binary.substring(27, 32);
+    }
+
     public String binary () {
         return this._opcode + this._dt + this._op + this._rn + this._rt;
     }
@@ -40,5 +48,6 @@ public class InstructionD extends Instruction {
 
     public String immediate () { return ""; }
 
-    public String address () { return ""; }
+    public String address () { return _dt; }
+
 }

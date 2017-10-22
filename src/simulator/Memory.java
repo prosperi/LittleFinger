@@ -61,4 +61,48 @@ public class Memory {
 
         return output;
     }
+
+    public String loadDoubleWord (int pc) {
+        String output = ""
+                + Converter.hexToBinary("" + Converter.decimalToHex((fetch(pc) & 0xff)).split("0x")[1], 8)
+                + Converter.hexToBinary("" + Converter.decimalToHex((fetch(pc + 1) & 0xff)).split("0x")[1], 8)
+                + Converter.hexToBinary("" + Converter.decimalToHex((fetch(pc + 2) & 0xff)).split("0x")[1], 8)
+                + Converter.hexToBinary("" + Converter.decimalToHex((fetch(pc + 3) & 0xff)).split("0x")[1], 8)
+                + Converter.hexToBinary("" + Converter.decimalToHex((fetch(pc + 4) & 0xff)).split("0x")[1], 8)
+                + Converter.hexToBinary("" + Converter.decimalToHex((fetch(pc + 5) & 0xff)).split("0x")[1], 8)
+                + Converter.hexToBinary("" + Converter.decimalToHex((fetch(pc + 6) & 0xff)).split("0x")[1], 8)
+                + Converter.hexToBinary("" + Converter.decimalToHex((fetch(pc + 7) & 0xff)).split("0x")[1], 8);
+
+        return output;
+    }
+
+    public String loadWord (int pc) {
+        String output = ""
+                + Converter.hexToBinary("" + Converter.decimalToHex((fetch(pc) & 0xff)).split("0x")[1], 8)
+                + Converter.hexToBinary("" + Converter.decimalToHex((fetch(pc + 1) & 0xff)).split("0x")[1], 8)
+                + Converter.hexToBinary("" + Converter.decimalToHex((fetch(pc + 2) & 0xff)).split("0x")[1], 8)
+                + Converter.hexToBinary("" + Converter.decimalToHex((fetch(pc + 3) & 0xff)).split("0x")[1], 8);
+
+        return output;
+    }
+
+    public String loadHalf (int pc) {
+        String output = ""
+                + Converter.hexToBinary("" + Converter.decimalToHex((fetch(pc) & 0xff)).split("0x")[1], 8)
+                + Converter.hexToBinary("" + Converter.decimalToHex((fetch(pc + 1) & 0xff)).split("0x")[1], 8);
+
+        return output;
+    }
+
+    public String loadByte (int pc) {
+        String output = ""
+                + Converter.hexToBinary("" + Converter.decimalToHex((fetch(pc) & 0xff)).split("0x")[1], 8);
+        return output;
+    }
+
+    public void store (int pc, String value) {
+        for (int i = 0; i < value.length() - 1; i += 2) {
+            store(pc + i / 2, (byte)(Integer.parseInt("" + value.charAt(i) + value.charAt(i + 1), 16)));
+        }
+    }
 }

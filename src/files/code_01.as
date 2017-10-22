@@ -13,8 +13,11 @@ main:
        LSL      x1, x1, 2
        LSR      x1, x1, 2
        ADDIS    x1, x1, 4
-       LDUR     x1, [x0, #0]  ; load data at start into register x1
+       EOR      x1, x0, x2
+       LDURSW   x1, [x1, #264]  ; load data at start into register x1
+       STURW    x1, [x1, #264]
        ADD      x2, x2, x1    ; add 0xAB to 10 and store in register x2
+       SUB      x2, x2, x1
        HALT                   ; halt the processor
 
 .pos 0x100                ; set image location to 0x100
@@ -24,7 +27,6 @@ main:
 
 data:
         .double 0x0AB     ; place 0xAB in a 8-byte location
-        .align 32
         .single 0x0AB     ; place 0xAB in a 4-byte location
         .half   0x0AB     ; place 0xAB in a 2-byte location
         .byte   0x0AB     ; place 0xAB in a 1-byte location

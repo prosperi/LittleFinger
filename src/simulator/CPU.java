@@ -3,6 +3,7 @@ package simulator;
 import helpers.Converter;
 import assembler.OpcodeTable;
 import instructions.Instruction;
+import instructions.InstructionD;
 import instructions.InstructionI;
 import instructions.InstructionR;
 
@@ -130,6 +131,7 @@ public class CPU {
        resetFlags();
 
         String output = "";
+        int location = 0;
         String instruction = _memory.load(_pc);
         OpcodeTable opcode = getOpcode(instruction.substring(0, 6));
         Instruction i;
@@ -202,29 +204,72 @@ public class CPU {
                 System.out.println("X" + Integer.parseInt(i.rd(), 2) + " = X" + Integer.parseInt(i.rn(), 2) + " - " + Integer.parseInt(i.immediate(), 2));
                 break;
             case LDUR:
-                System.out.println("This is LDUR");
-                // _pc + offset
+                i = new InstructionD(instruction);
+                output = _memory.loadDoubleWord(Integer.parseInt(_gpr.get(Integer.parseInt(i.rn(), 2)), 2) + Integer.parseInt(i.address(), 2));
+                _gpr.set(Integer.parseInt(i.rt(), 2), output);
+
+                System.out.println("Performing LDUR: ");
+                System.out.println("X" + Integer.parseInt(i.rt(), 2) + " = Memory [X" + Integer.parseInt(i.rn(), 2) + " + " + Integer.parseInt(i.address(), 2) + "] ");
                 break;
             case STUR:
-                System.out.println("This is STUR");
+                i = new InstructionD(instruction);
+                location = Integer.parseInt(_gpr.get(Integer.parseInt(i.rn(), 2)), 2) + Integer.parseInt(i.address(), 2);
+                output = _gpr.get(Integer.parseInt(i.rt(), 2));
+                _memory.store(location, output);
+
+                System.out.println("Performing STUR: ");
+                System.out.println("Memory [X" + Integer.parseInt(i.rn(), 2) + " + " + Integer.parseInt(i.address(), 2) + "]  = X" + Integer.parseInt(i.rt(), 2) );
                 break;
             case LDURSW:
-                System.out.println("This is LDURSW");
+                i = new InstructionD(instruction);
+                output = _memory.loadWord(Integer.parseInt(_gpr.get(Integer.parseInt(i.rn(), 2)), 2) + Integer.parseInt(i.address(), 2));
+                _gpr.set(Integer.parseInt(i.rt(), 2), output);
+
+                System.out.println("Performing LDURW: ");
+                System.out.println("X" + Integer.parseInt(i.rt(), 2) + " = Memory [X" + Integer.parseInt(i.rn(), 2) + " + " + Integer.parseInt(i.address(), 2) + "] ");
                 break;
             case STURW:
-                System.out.println("This is STURW");
+                i = new InstructionD(instruction);
+                location = Integer.parseInt(_gpr.get(Integer.parseInt(i.rn(), 2)), 2) + Integer.parseInt(i.address(), 2);
+                output = _gpr.get(Integer.parseInt(i.rt(), 2));
+                _memory.store(location, output);
+
+                System.out.println("Performing STURW: ");
+                System.out.println("Memory [X" + Integer.parseInt(i.rn(), 2) + " + " + Integer.parseInt(i.address(), 2) + "]  = X" + Integer.parseInt(i.rt(), 2) );
                 break;
             case LDURH:
-                System.out.println("This is LDURH");
+                i = new InstructionD(instruction);
+                output = _memory.loadHalf(Integer.parseInt(_gpr.get(Integer.parseInt(i.rn(), 2)), 2) + Integer.parseInt(i.address(), 2));
+                _gpr.set(Integer.parseInt(i.rt(), 2), output);
+
+                System.out.println("Performing LDURH: ");
+                System.out.println("X" + Integer.parseInt(i.rt(), 2) + " = Memory [X" + Integer.parseInt(i.rn(), 2) + " + " + Integer.parseInt(i.address(), 2) + "] ");
                 break;
             case STURH:
-                System.out.println("This is STURH");
+                i = new InstructionD(instruction);
+                location = Integer.parseInt(_gpr.get(Integer.parseInt(i.rn(), 2)), 2) + Integer.parseInt(i.address(), 2);
+                output = _gpr.get(Integer.parseInt(i.rt(), 2));
+                _memory.store(location, output);
+
+                System.out.println("Performing STURH: ");
+                System.out.println("Memory [X" + Integer.parseInt(i.rn(), 2) + " + " + Integer.parseInt(i.address(), 2) + "]  = X" + Integer.parseInt(i.rt(), 2) );
                 break;
             case LDURB:
-                System.out.println("This is LDURB");
+                i = new InstructionD(instruction);
+                output = _memory.loadByte(Integer.parseInt(_gpr.get(Integer.parseInt(i.rn(), 2)), 2) + Integer.parseInt(i.address(), 2));
+                _gpr.set(Integer.parseInt(i.rt(), 2), output);
+
+                System.out.println("Performing LDURB: ");
+                System.out.println("X" + Integer.parseInt(i.rt(), 2) + " = Memory [X" + Integer.parseInt(i.rn(), 2) + " + " + Integer.parseInt(i.address(), 2) + "] ");
                 break;
             case STURB:
-                System.out.println("This is STURB");
+                i = new InstructionD(instruction);
+                location = Integer.parseInt(_gpr.get(Integer.parseInt(i.rn(), 2)), 2) + Integer.parseInt(i.address(), 2);
+                output = _gpr.get(Integer.parseInt(i.rt(), 2));
+                _memory.store(location, output);
+
+                System.out.println("Performing STURB: ");
+                System.out.println("Memory [X" + Integer.parseInt(i.rn(), 2) + " + " + Integer.parseInt(i.address(), 2) + "]  = X" + Integer.parseInt(i.rt(), 2) );
                 break;
             case AND:
                 i = new InstructionR(instruction);
@@ -346,7 +391,7 @@ public class CPU {
             if (a.charAt(i) == '0' && tmp == '1' && _c == 1) { output += 0; _c = 1; continue; }
 
             if (a.charAt(i) == '1' && tmp == '0' && _c == 0) { output += 1; _c = 0; continue; }
-            if (a.charAt(i) == '1' && tmp == '0' && _c == 1) { output += 1; _c = 1; continue; }
+            if (a.charAt(i) == '1' && tmp == '0' && _c == 1) { output += 0; _c = 1; continue; }
             if (a.charAt(i) == '1' && tmp == '1' && _c == 0) { output += 0; _c = 1; continue; }
             if (a.charAt(i) == '1' && tmp == '1' && _c == 1) { output += 1; _c = 1; continue; }
 
@@ -358,6 +403,8 @@ public class CPU {
     public String subi (String a, String b) {
         String output = "";
 
+        System.out.println(a + " " + b);
+
         for (int i = 0; i < b.length(); i++) {
             if (b.charAt(i) == '0') output += "1";
             else output += "0";
@@ -365,6 +412,8 @@ public class CPU {
         for (int i = b.length(); i < _ws; i++) {
             output = output.charAt(0) + output;
         }
+
+        _c = 0;
 
         output = addi(a, addi(output, "1"));
         return output;
