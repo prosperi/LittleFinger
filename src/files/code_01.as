@@ -8,6 +8,10 @@ main:
        SUBI x2, x2, #9    ; store 20 in register x2
        ADDI x3, x3, #1
        AND  x0, x2, x3
+       ORR  x0, x0, x2
+       EOR  x1, x2, x3
+       LSL  x1, x1, 2
+       LSR  x1, x1, 2
        LDUR x1, [x0, #0]  ; load data at start into register x1
        ADD  x2, x2, x1    ; add 0xAB to 10 and store in register x2
        HALT               ; halt the processor

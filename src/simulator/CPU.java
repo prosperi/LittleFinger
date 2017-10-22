@@ -19,6 +19,7 @@ public class CPU {
 
     private String _format;
     private int _rc, _mm, _ws;
+    private boolean _halt;
 
     public CPU (ArrayList<String> source) {
         _source = source;
@@ -32,15 +33,10 @@ public class CPU {
 
         System.out.println(this);
 
-        step();
-        _pc += 4;
-        step();
-        _pc += 4;
-        step();
-        _pc += 4;
-        step();
-        _pc += 4;
-
+        while (!_halt) {
+            step();
+            _pc += 4;
+        }
     }
 
     void loadHeader () {
@@ -82,12 +78,17 @@ public class CPU {
 
     public void reset () {
         _pc = 0;    // program counter
+        resetFlags();
+
+        _halt = false;
+        _gpr = new ArrayList<String>();
+    }
+
+    public void resetFlags () {
         _n = 0;     // negative
         _c = 0;     // carry
         _z = 0;     // zero
         _v = 0;     // overflow
-
-        _gpr = new ArrayList<String>();
     }
 
     public String toString () {
@@ -126,6 +127,8 @@ public class CPU {
     }
 
     public void step () {
+       resetFlags();
+
         String output = "";
         String instruction = _memory.load(_pc);
         OpcodeTable opcode = getOpcode(instruction.substring(0, 6));
@@ -145,7 +148,6 @@ public class CPU {
 
                 System.out.println("Performing ADDI: ");
                 System.out.println("X" + Integer.parseInt(i.rd(), 2) + " = X" + Integer.parseInt(i.rn(), 2) + " + " + Integer.parseInt(i.immediate(), 2));
-                System.out.println(output);
                 break;
             case SUBI:
                 i = new InstructionI(instruction);
@@ -154,7 +156,6 @@ public class CPU {
 
                 System.out.println("Performing SUBI: ");
                 System.out.println("X" + Integer.parseInt(i.rd(), 2) + " = X" + Integer.parseInt(i.rn(), 2) + " - " + Integer.parseInt(i.immediate(), 2));
-                System.out.println(output);
                 break;
             case ADDS:
                 System.out.println("This is ADDS");
@@ -198,29 +199,63 @@ public class CPU {
                 _gpr.set(Integer.parseInt(i.rd(), 2), output);
 
                 System.out.println("Performing AND: ");
-                System.out.println("X" + Integer.parseInt(i.rd(), 2) + " = X" + Integer.parseInt(i.rn(), 2) + " & X" + Integer.parseInt(i.rn(), 2));
-                System.out.println(output);
+                System.out.println("X" + Integer.parseInt(i.rd(), 2) + " = X" + Integer.parseInt(i.rn(), 2) + " & X" + Integer.parseInt(i.rm(), 2));
                 break;
             case ORR:
-                System.out.println("This is ORR");
+                i = new InstructionR(instruction);
+                output = orr(_gpr.get(Integer.parseInt(i.rn(), 2)), _gpr.get(Integer.parseInt(i.rm(), 2)));
+                _gpr.set(Integer.parseInt(i.rd(), 2), output);
+
+                System.out.println("Performing ORR: ");
+                System.out.println("X" + Integer.parseInt(i.rd(), 2) + " = X" + Integer.parseInt(i.rn(), 2) + " | X" + Integer.parseInt(i.rm(), 2));
                 break;
             case EOR:
-                System.out.println("This is EOR");
+                i = new InstructionR(instruction);
+                output = eor(_gpr.get(Integer.parseInt(i.rn(), 2)), _gpr.get(Integer.parseInt(i.rm(), 2)));
+                _gpr.set(Integer.parseInt(i.rd(), 2), output);
+
+                System.out.println("Performing EOR: ");
+                System.out.println("X" + Integer.parseInt(i.rd(), 2) + " = X" + Integer.parseInt(i.rn(), 2) + " ^ X" + Integer.parseInt(i.rm(), 2));
                 break;
             case ANDI:
-                System.out.println("This is ANDI");
+                i = new InstructionI(instruction);
+                output = andi(_gpr.get(Integer.parseInt(i.rn(), 2)), i.immediate());
+                _gpr.set(Integer.parseInt(i.rd(), 2), output);
+
+                System.out.println("Performing ANDI: ");
+                System.out.println("X" + Integer.parseInt(i.rd(), 2) + " = X" + Integer.parseInt(i.rn(), 2) + " & " + Integer.parseInt(i.immediate(), 2));
                 break;
             case ORRI:
-                System.out.println("This is ADDS");
+                i = new InstructionI(instruction);
+                output = orri(_gpr.get(Integer.parseInt(i.rn(), 2)), i.immediate());
+                _gpr.set(Integer.parseInt(i.rd(), 2), output);
+
+                System.out.println("Performing ORRI: ");
+                System.out.println("X" + Integer.parseInt(i.rd(), 2) + " = X" + Integer.parseInt(i.rn(), 2) + " | " + Integer.parseInt(i.immediate(), 2));
                 break;
             case EORI:
-                System.out.println("This is EORI");
+                i = new InstructionI(instruction);
+                output = eori(_gpr.get(Integer.parseInt(i.rn(), 2)), i.immediate());
+                _gpr.set(Integer.parseInt(i.rd(), 2), output);
+
+                System.out.println("Performing EORI: ");
+                System.out.println("X" + Integer.parseInt(i.rd(), 2) + " = X" + Integer.parseInt(i.rn(), 2) + " ^ " + Integer.parseInt(i.immediate(), 2));
                 break;
             case LSL:
-                System.out.println("This is LSL");
+                i = new InstructionR(instruction);
+                output = lsl(_gpr.get(Integer.parseInt(i.rn(), 2)), Integer.parseInt(i.shamt(), 2));
+                _gpr.set(Integer.parseInt(i.rd(), 2), output);
+
+                System.out.println("Performing LSL: ");
+                System.out.println("X" + Integer.parseInt(i.rd(), 2) + " = X" + Integer.parseInt(i.rn(), 2) + " << " + Integer.parseInt(i.rm(), 2));
                 break;
             case LSR:
-                System.out.println("This is LSR");
+                i = new InstructionR(instruction);
+                output = lsr(_gpr.get(Integer.parseInt(i.rn(), 2)), Integer.parseInt(i.shamt(), 2));
+                _gpr.set(Integer.parseInt(i.rd(), 2), output);
+
+                System.out.println("Performing LSR: ");
+                System.out.println("X" + Integer.parseInt(i.rd(), 2) + " = X" + Integer.parseInt(i.rn(), 2) + " >> " + Integer.parseInt(i.rm(), 2));
                 break;
             case CBZ:
                 System.out.println("This is CBZ");
@@ -242,6 +277,7 @@ public class CPU {
                 break;
             case HALT:
                 System.out.println("This is HALT");
+                _halt = true;
                 break;
             case NOP:
                 System.out.println("This is NOP");
@@ -265,6 +301,7 @@ public class CPU {
 
         a = new StringBuilder(a).reverse().toString();
         b = new StringBuilder(b).reverse().toString();
+
 
         for (int i = 0; i < a.length(); i++) {
             char tmp = b.length() > i ? b.charAt(i) : '0';
@@ -318,4 +355,85 @@ public class CPU {
 
         return output;
     }
+
+    // could be done with and and negation
+    public String orr (String a, String b) {
+        String output = "";
+
+        if (a.length() < b.length()) {
+            String tmp = a;
+            a = b;
+            b = tmp;
+        }
+
+        for (int i = 0; i < a.length(); i++) {
+            char tmp = b.length() > i ? b.charAt(i) : '0';
+
+            if (a.charAt(i) == '1' || tmp == '1') output += '1';
+            else output += '0';
+        }
+
+        return output;
+    }
+
+    public String eor (String a, String b) {
+        String output = "";
+
+        if (a.length() < b.length()) {
+            String tmp = a;
+            a = b;
+            b = tmp;
+        }
+
+        for (int i = 0; i < a.length(); i++) {
+            char tmp = b.length() > i ? b.charAt(i) : '0';
+
+            if (a.charAt(i) != tmp) output += '1';
+            else output += '0';
+        }
+
+        return output;
+    }
+
+    public String andi (String a, String b) {
+        return and(a, b);
+    }
+
+    public String orri (String a, String b) {
+        return orr(a, b);
+    }
+
+    public String eori (String a, String b) {
+        return eori(a, b);
+    }
+
+    public String lsl (String a, int b) {
+        String output = a;
+
+        for (int i = a.length(); i < _ws; i++) {
+            output = output.charAt(0) + output;
+        }
+
+        for (int i = 0; i < b; i++) {
+            output = output.substring(1) + "0";
+        }
+
+        return output;
+    }
+
+    public String lsr (String a, int b) {
+        String output = a;
+        System.out.println(output + " " + output.substring(0, output.length() - 1));
+
+        for (int i = a.length(); i < _ws; i++) {
+            output = output.charAt(0) + output;
+        }
+
+        for (int i = 0; i < b; i++) {
+            output = output.charAt(0) + output.substring(0, output.length() - 1);
+        }
+
+        return output;
+    }
+
 }
