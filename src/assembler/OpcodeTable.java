@@ -53,5 +53,8 @@ public enum OpcodeTable {
         return _mnemonic;
     }
 
+    public String opcode () {
+        return _mnemonic.opcode().binary().substring(0, 6);
+    }
 
 }

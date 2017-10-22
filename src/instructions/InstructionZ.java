@@ -17,4 +17,21 @@ public class InstructionZ extends Instruction {
     public String hex () {
         return Converter.binaryToHex(this.binary());
     }
+
+    public String opcode () { return _opcode; }
+
+    public String rt () { return ""; }
+
+    public String rm () { return ""; }
+
+    public String rn () { return ""; }
+
+    public String rd () { return ""; }
+
+    public String shamt () { return ""; }
+
+    public String immediate () { return ""; }
+
+    public String address () { return ""; }
+
 }
