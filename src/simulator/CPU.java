@@ -136,14 +136,24 @@ public class CPU {
 
         switch (opcode) {
             case ADD:
-                System.out.println("This is ADD");
+                i = new InstructionR(instruction);
+                output = addi(_gpr.get(Integer.parseInt(i.rn(), 2)), _gpr.get(Integer.parseInt(i.rm(), 2)));
+                _gpr.set(Integer.parseInt(i.rd(), 2), output);
+
+                System.out.println("Performing ADD: ");
+                System.out.println("X" + Integer.parseInt(i.rd(), 2) + " = X" + Integer.parseInt(i.rn(), 2) + " + X" + Integer.parseInt(i.rm(), 2));
                 break;
             case SUB:
-                System.out.println("This is SUB");
+                i = new InstructionR(instruction);
+                output = subi(_gpr.get(Integer.parseInt(i.rn(), 2)), _gpr.get(Integer.parseInt(i.rm(), 2)));
+                _gpr.set(Integer.parseInt(i.rd(), 2), output);
+
+                System.out.println("Performing SUB: ");
+                System.out.println("X" + Integer.parseInt(i.rd(), 2) + " = X" + Integer.parseInt(i.rn(), 2) + " - X" + Integer.parseInt(i.rm(), 2));
                 break;
             case ADDI:
                 i = new InstructionI(instruction);
-                output = sum(_gpr.get(Integer.parseInt(i.rn(), 2)), i.immediate());
+                output = addi(_gpr.get(Integer.parseInt(i.rn(), 2)), i.immediate());
                 _gpr.set(Integer.parseInt(i.rd(), 2), output);
 
                 System.out.println("Performing ADDI: ");
@@ -151,26 +161,49 @@ public class CPU {
                 break;
             case SUBI:
                 i = new InstructionI(instruction);
-                output = sub(_gpr.get(Integer.parseInt(i.rn(), 2)), i.immediate());
+                output = subi(_gpr.get(Integer.parseInt(i.rn(), 2)), i.immediate());
                 _gpr.set(Integer.parseInt(i.rd(), 2), output);
 
                 System.out.println("Performing SUBI: ");
                 System.out.println("X" + Integer.parseInt(i.rd(), 2) + " = X" + Integer.parseInt(i.rn(), 2) + " - " + Integer.parseInt(i.immediate(), 2));
                 break;
             case ADDS:
-                System.out.println("This is ADDS");
+                i = new InstructionR(instruction);
+                output = addi(_gpr.get(Integer.parseInt(i.rn(), 2)), _gpr.get(Integer.parseInt(i.rm(), 2)));
+                _gpr.set(Integer.parseInt(i.rd(), 2), output);
+
+                System.out.println("Performing ADDS: ");
+                System.out.println("X" + Integer.parseInt(i.rd(), 2) + " = X" + Integer.parseInt(i.rn(), 2) + " + X" + Integer.parseInt(i.rm(), 2));
                 break;
             case SUBS:
-                System.out.println("This is SUBS");
+                i = new InstructionR(instruction);
+                output = subi(_gpr.get(Integer.parseInt(i.rn(), 2)), _gpr.get(Integer.parseInt(i.rm(), 2)));
+                _gpr.set(Integer.parseInt(i.rd(), 2), output);
+
+                System.out.println("Performing SUBS: ");
+                System.out.println("X" + Integer.parseInt(i.rd(), 2) + " = X" + Integer.parseInt(i.rn(), 2) + " - X" + Integer.parseInt(i.rm(), 2));
                 break;
             case ADDIS:
-                System.out.println("This is ADDIS");
+                i = new InstructionI(instruction);
+                output = addi(_gpr.get(Integer.parseInt(i.rn(), 2)), i.immediate());
+                output = lsl(output, Integer.parseInt(i.immediate(), 2));
+                _gpr.set(Integer.parseInt(i.rd(), 2), output);
+
+                System.out.println("Performing ADDIS: ");
+                System.out.println("X" + Integer.parseInt(i.rd(), 2) + " = X" + Integer.parseInt(i.rn(), 2) + " + " + Integer.parseInt(i.immediate(), 2));
                 break;
             case SUBIS:
-                System.out.println("This is SUBIS");
+                i = new InstructionI(instruction);
+                output = subi(_gpr.get(Integer.parseInt(i.rn(), 2)), i.immediate());
+                output = lsl(output, Integer.parseInt(i.immediate(), 2));
+                _gpr.set(Integer.parseInt(i.rd(), 2), output);
+
+                System.out.println("Performing SUBIS: ");
+                System.out.println("X" + Integer.parseInt(i.rd(), 2) + " = X" + Integer.parseInt(i.rn(), 2) + " - " + Integer.parseInt(i.immediate(), 2));
                 break;
             case LDUR:
                 System.out.println("This is LDUR");
+                // _pc + offset
                 break;
             case STUR:
                 System.out.println("This is STUR");
@@ -290,7 +323,7 @@ public class CPU {
         System.out.println(this);
     }
 
-    public String sum (String a, String b) {
+    public String addi (String a, String b) {
         String output = "";
 
         if (a.length() < b.length()) {
@@ -322,7 +355,7 @@ public class CPU {
         return new StringBuilder(output).reverse().toString();
     }
 
-    public String sub (String a, String b) {
+    public String subi (String a, String b) {
         String output = "";
 
         for (int i = 0; i < b.length(); i++) {
@@ -333,7 +366,7 @@ public class CPU {
             output = output.charAt(0) + output;
         }
 
-        output = sum(a, sum(output, "1"));
+        output = addi(a, addi(output, "1"));
         return output;
     }
 
