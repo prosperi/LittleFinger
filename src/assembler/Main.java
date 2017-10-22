@@ -1,3 +1,5 @@
+package assembler;
+
 import assembler.*;
 
 import java.io.IOException;

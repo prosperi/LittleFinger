@@ -105,4 +105,17 @@ public class Memory {
             store(pc + i / 2, (byte)(Integer.parseInt("" + value.charAt(i) + value.charAt(i + 1), 16)));
         }
     }
+
+    public String state () {
+        String output = "";
+        String tmp = "";
+
+        for (int i = 0; i < _memory.size(); i++) {
+            tmp = Converter.decimalToHex(_memory.get(i) & 0xff).substring(2);
+            if (i % 8 == 0) output += "\n";
+            output += tmp.length() > 1 ? tmp : ("0" + tmp);
+        }
+        return output;
+    }
 }
+

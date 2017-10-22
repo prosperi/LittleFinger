@@ -213,15 +213,4 @@ public class Main extends Application {
 
 
     }
-
-
-
-//    Rectangle rect = new Rectangle(0, 0, 20, 20);
-//    rect.setFill(Color.TRANSPARENT);
-//    rect.setStroke(Color.RED);
-//    rect.setStrokeWidth(1);
-//    rect.setArcHeight(10);
-//    rect.setArcWidth(10);
-//
-//    grid.add(rect, 1, 1);
 }

@@ -34,6 +34,19 @@ public class CPU {
 
         System.out.println(this);
 
+
+    }
+
+    public boolean execute () {
+        step();
+        _pc += 4;
+
+        if (_halt) return false;
+
+        return true;
+    }
+
+    public void emulate () {
         while (!_halt) {
             step();
             _pc += 4;
@@ -71,6 +84,7 @@ public class CPU {
     void loadSource () {
         for (int i = 1; i < _source.size(); i++) {
             for (int j = 0; j < _source.get(i).length() - 1; j += 2) {
+                if (_source.get(i).charAt(j) == '#') break;
                 _memory.store(8 * (i - 1) + j / 2, (byte)(Integer.parseInt("" + _source.get(i).charAt(j) + _source.get(i).charAt(j + 1), 16)));
             }
         }
@@ -360,6 +374,10 @@ public class CPU {
             case NOP:
                 System.out.println("This is NOP");
                 break;
+            case PUSH:
+                break;
+            case POP:
+                break;
             default:
                 System.out.println("No such instruction found");
                 break;
@@ -518,4 +536,32 @@ public class CPU {
         return output;
     }
 
+    public int pc () { return _pc; }
+
+    public Memory memory () { return _memory; }
+
+    public ArrayList<String> config () {
+        ArrayList<String> tmp = new ArrayList<String>();
+
+        for (int i = 0; i < _gpr.size(); i++) {
+            tmp.add("R" + i);
+            tmp.add(Converter.binaryToHex(_gpr.get(i)).replaceFirst("^0+(?!$)", "") + "     |");
+        }
+
+        tmp.add("PC    ");
+        tmp.add("0x" + _pc * 2);
+        tmp.add("SP    ");
+        tmp.add("0");
+
+        tmp.add("N    ");
+        tmp.add("" + _n);
+        tmp.add("C    ");
+        tmp.add("" + _c);
+        tmp.add("Z    ");
+        tmp.add("" + _z);
+        tmp.add("V    ");
+        tmp.add("" + _v);
+
+        return tmp;
+    }
 }

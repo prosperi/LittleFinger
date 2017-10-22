@@ -5,6 +5,7 @@ import java.util.HashMap;
 public class SymbolTable {
 
     private HashMap<String, Integer> _symbols;
+    private String output;
 
     public SymbolTable () {
 
@@ -22,12 +23,16 @@ public class SymbolTable {
         return address;
     }
 
-    public void display () {
+    public String display () {
+        output = "";
         System.out.println("\nSumbol Table:\n");
         _symbols.forEach((key, value) -> {
+            output += key + ": " + value + "\n";
             System.out.println(key + ": " + value);
         });
         System.out.println();
+
+        return output;
     }
 
 }

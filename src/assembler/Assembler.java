@@ -11,12 +11,28 @@ public class Assembler {
     private Parser _parser;
     private SymbolTable _symbol_table;
 
-    private Stream<String> _source;
+    private ArrayList<String> _source;
     private String _output;
     private int _lc;
 
     public Assembler (Stream<String> s) {
 
+        _source = new ArrayList<String>();
+        _output = "";
+        _lc = 0;
+
+        _lexical_scanner = new LexicalScanner();
+        _parser = new Parser();
+        _symbol_table = new SymbolTable();
+
+        s.forEach(value -> {
+            _source.add(value);
+            System.out.println(value);
+        } );
+
+    }
+
+    public Assembler (ArrayList<String> s) {
         _source = s;
         _output = "";
         _lc = 0;
@@ -109,5 +125,5 @@ public class Assembler {
     public void label (String l) {
         _symbol_table.address(l, _lc);
     }
-
+    public String st () { return _symbol_table.display(); }
 }

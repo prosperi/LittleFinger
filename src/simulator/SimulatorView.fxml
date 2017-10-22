@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Rectangle arcWidth="5.0" height="640.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="960.0">
+            <fill>
+                <LinearGradient cycleMethod="REPEAT" endX="1.0" endY="1.0">
+                    <stops>
+                        <Stop color="#1f93ff" />
+                        <Stop color="#50a08a" offset="0.007434944237918215" />
+                        <Stop color="#3b718f" offset="1.0" />
+                    </stops>
+                </LinearGradient>
+            </fill>
+        </Rectangle>
+
+        <Pane layoutX="470.0" layoutY="50.0" prefHeight="540.0" prefWidth="480.0">
+            <children>
+                <Text fill="WHITE" layoutX="200" layoutY="-20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HALT CALLED" fx:id="halt" visible="false">
+                    <font>
+                        <Font name="Monaco" size="16.0" />
+                    </font>
+                </Text>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bf382cb0" height="30.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="480.0" />
+                <Text fill="WHITE" layoutX="217.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Code">
+                    <font>
+                        <Font name="Monaco" size="16.0" />
+                    </font>
+                </Text>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff7b" height="500.0" layoutY="38.0" stroke="#2c3e50b5" strokeType="INSIDE" strokeWidth="3.0" width="480.0" />
+                <TextArea fx:id="code" layoutX="15.0" layoutY="65.0" prefHeight="450.0" prefWidth="450.0">
+                    <font>
+                        <Font name="Monaco" size="12.0" />
+                    </font>
+                    <effect>
+                        <InnerShadow color="#3b7393" />
+                    </effect>
+                </TextArea>
+                <Pane fx:id="assemble">
+                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bf382cb0" height="30.0" layoutX="165.0" layoutY="555.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="150.0" x="8.0">
+                        <cursor>
+                            <Cursor fx:constant="HAND" />
+                        </cursor>
+                    </Rectangle>
+                    <Text fill="WHITE" layoutX="205.0" layoutY="575.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Assemble" wrappingWidth="101.3609619140625">
+                        <font>
+                            <Font name="Monaco" size="16.0" />
+                        </font>
+                        <cursor>
+                            <Cursor fx:constant="HAND" />
+                        </cursor>
+                    </Text>
+                </Pane>
+            </children>
+        </Pane>
+        <Pane layoutX="8.0" layoutY="43.0" prefHeight="590.0" prefWidth="451.0">
+            <children>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bf382cb0" height="31.0" layoutX="2.0" layoutY="7.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="350.0" />
+                <Text fill="WHITE" layoutX="122.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CPU / MEMORY">
+                    <font>
+                        <Font name="Monaco" size="16.0" />
+                    </font>
+                </Text>
+            <Pane layoutX="361.0" layoutY="144.0" fx:id="run">
+               <children>
+                      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#16a085cf" height="30.0" stroke="#2c3e50" strokeType="INSIDE" width="81.0" x="8.0">
+                          <cursor>
+                              <Cursor fx:constant="HAND" />
+                          </cursor>
+                      </Rectangle>
+      
+                      <Text fill="WHITE" layoutX="41.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Run">
+                          <font>
+                              <Font name="Monaco" size="12.0" />
+                          </font>
+                          <cursor>
+                              <Cursor fx:constant="HAND" />
+                          </cursor>
+                      </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="360.0" layoutY="202.0" fx:id="step">
+               <children>
+                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3498dbb0" height="30.0" stroke="#2c3e50" strokeType="INSIDE" width="81.0" x="8.0">
+                              <cursor>
+                                  <Cursor fx:constant="HAND" />
+                              </cursor>
+                          </Rectangle>
+                          <Text fill="WHITE" layoutX="35.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Step">
+                              <font>
+                                  <Font name="Monaco" size="12.0" />
+                              </font>
+                              <cursor>
+                                  <Cursor fx:constant="HAND" />
+                              </cursor>
+                          </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="361.0" layoutY="259.0" fx:id="reset">
+               <children>
+                          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bf382cb0" height="30.0" stroke="#2c3e50" strokeType="INSIDE" width="81.0" x="8.0">
+                              <cursor>
+                                  <Cursor fx:constant="HAND" />
+                              </cursor>
+                          </Rectangle>
+                          <Text fill="WHITE" layoutX="30.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reset">
+                              <font>
+                                  <Font name="Monaco" size="12.0" />
+                              </font>
+                              <cursor>
+                                  <Cursor fx:constant="HAND" />
+                              </cursor>
+                          </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="380.0" layoutY="304.0" fx:id="stop">
+               <children>
+      
+                      <Circle fill="#e54a3c85" layoutX="24.0" layoutY="19.0" radius="25.0" stroke="#2c3e50" strokeType="INSIDE">
+                          <cursor>
+                              <Cursor fx:constant="HAND" />
+                          </cursor>
+                      </Circle>
+                      <Text fill="WHITE" layoutX="9.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stop" wrappingWidth="36.005859375">
+                          <font>
+                              <Font name="Monaco" size="12.0" />
+                          </font>
+                          <cursor>
+                              <Cursor fx:constant="HAND" />
+                          </cursor>
+                      </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="361.0" layoutY="360.0" fx:id="save">
+                <children>
+                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bf382cb0" height="30.0" stroke="#2c3e50" strokeType="INSIDE" width="81.0" x="8.0">
+                        <cursor>
+                            <Cursor fx:constant="HAND" />
+                        </cursor>
+                    </Rectangle>
+                    <Text fill="WHITE" layoutX="30.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Save">
+                        <font>
+                            <Font name="Monaco" size="12.0" />
+                        </font>
+                        <cursor>
+                            <Cursor fx:constant="HAND" />
+                        </cursor>
+                    </Text>
+                </children>
+            </Pane>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#bf382cb0" height="31.0" layoutX="4.0" layoutY="450.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="350.0" />
+                <Text fill="WHITE" layoutX="152.0" layoutY="471.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Labels">
+                    <font>
+                        <Font name="Monaco" size="16.0" />
+                    </font>
+                </Text>
+                <TextArea fx:id="labels" layoutX="14.0" layoutY="490.0" prefHeight="94.0" prefWidth="330.0" />
+            </children>
+        </Pane>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff7b" height="400.0" layoutX="10.0" layoutY="84.0" stroke="#2c3e50b5" strokeType="INSIDE" strokeWidth="3.0" width="350.0" />
+
+        <ScrollPane layoutX="15.0" layoutY="178.0" maxHeight="300.0" maxWidth="340.0" prefHeight="300.0" prefWidth="340.0">
+            <content>
+                <Pane>
+                    <children>
+                        <GridPane fx:id="memory" layoutX="20.0" layoutY="18.0" maxHeight="300.0" maxWidth="300.0" prefHeight="300.0" prefWidth="300.0">
+                            <columnConstraints>
+                                <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" minWidth="10.0" prefWidth="150.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            </columnConstraints>
+                        </GridPane>
+                    </children>
+                </Pane>
+            </content>
+        </ScrollPane>
+        <Text fill="#c0392b" layoutX="20.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="assembler.Main Memory">
+            <font>
+                <Font name="Monaco" size="14.0" />
+            </font>
+        </Text>
+
+        <GridPane alignment="CENTER" layoutX="20.0" layoutY="106.0" prefHeight="45.0" prefWidth="330.0" fx:id="flags">
+
+        </GridPane>
+        <Text fill="#c0392b" layoutX="18.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registers / Flags">
+            <font>
+                <Font name="Monaco" size="14.0" />
+            </font>
+        </Text>
+    </children>
+</Pane>
