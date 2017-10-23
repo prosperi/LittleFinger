@@ -2,6 +2,10 @@ package assembler;
 
 import java.util.HashMap;
 
+/**
+ * SymbolTable stores information about all the found labels,
+ * keeps their addresses and values
+ */
 public class SymbolTable {
 
     private HashMap<String, Integer> _symbols;
@@ -13,6 +17,11 @@ public class SymbolTable {
 
     }
 
+    /**
+     * Check the symbol in container
+     * @param symbol
+     * @return
+     */
     public int address (String symbol) {
         return _symbols.get(symbol);
     }
@@ -23,6 +32,10 @@ public class SymbolTable {
         return address;
     }
 
+    /**
+     * Display Symbol table in a nice and organized way
+     * @return
+     */
     public String display () {
         output = "";
         System.out.println("\nSumbol Table:\n");

@@ -1,5 +1,8 @@
 package instructions;
 
+/**
+ * Instruction abstract class, each instruction type extends Instruction
+ */
 public abstract class Instruction {
     public abstract String binary ();
     public abstract String hex();

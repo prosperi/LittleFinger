@@ -7,6 +7,16 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+/**
+ *
+ * @author Zura Mestiashvili
+ * @version v1.0.0
+ *
+ *
+ * Main class initializes Assembler and calls assemble
+ * method on it to generate machine code
+ */
+
 public class Main {
     public static void main(String[] args) {
 
@@ -17,6 +27,7 @@ public class Main {
 
             Assembler assembler = new Assembler(source);
 
+            // assemble
             byte[] assembled = assembler.assemble().getBytes();
 
             Files.write(Paths.get(destination), assembled);

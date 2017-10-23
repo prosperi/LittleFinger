@@ -2,6 +2,9 @@ package assembler;
 
 import java.util.regex.Pattern;
 
+/**
+ * PatternTable stores all the regular expression used to scan and parse provided file
+ */
 public enum PatternTable {
     DIRECTIVE   (Pattern.compile("^(.*)[ \\t]*\\.([a-z]+)[ \\t]+([0-9a-zA-Z]+)[ \\t]*(;[ \\t]+.+)?$"))                                      ,
     MNEMONIC    (Pattern.compile("^[ \\t]*([A-Z]+)[ \\t]*(([a-zA-Z0-9#\\]\\[]+,?[ \\t]*)+([a-zA-Z0-9#\\]\\[]+)[ \\t]*)?(;[ \\t]+.+)?$"))     ,
@@ -20,6 +23,10 @@ public enum PatternTable {
 
     private final Pattern _pattern;
 
+    /**
+     *
+     * @param p pattern
+     */
     PatternTable (Pattern p) {
         _pattern = p;
     }

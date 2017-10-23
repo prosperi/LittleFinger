@@ -46,6 +46,10 @@ public class Main extends Application {
         launch(args);
     }
 
+    /**
+     * Construct view, Add event handlers and setup the application
+     * @param stage
+     */
     @Override
     public void start(Stage stage) {
 
@@ -119,6 +123,9 @@ public class Main extends Application {
 
     }
 
+    /**
+     * Read provided source file
+     */
     public static void readSource () {
         String input = "./src/out/code_01.o";
 
@@ -129,6 +136,10 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * Load source file in grid to view
+     * @param grid
+     */
     public static void loadSource (GridPane grid) {
         chunks = new ArrayList<String>();
 
@@ -147,6 +158,10 @@ public class Main extends Application {
 
     }
 
+    /**
+     *  Update format of displayed source file - binary or hex
+     * @param format binary or hex
+     */
     public static void changeFormat (String format) {
 
         if (format.equals(currentFormat)) return;
@@ -166,7 +181,11 @@ public class Main extends Application {
         }
     }
 
-
+    /**
+     *
+     * @param chunks lines of source file that need to be displayed
+     * @param start starting position for line counting
+     */
     public static void setupGrid (ArrayList<String> chunks, int start) {
         GridPane grid = (GridPane) scene.lookup("#grid");
 
@@ -184,6 +203,10 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * Filter the source file based on the provided range, and check with
+     * chosen format(binary or hex) at the same time
+     */
     public static void filter () {
         int s, e;
         TextField start = (TextField) scene.lookup("#start");
@@ -192,7 +215,7 @@ public class Main extends Application {
         CheckBox binary = (CheckBox) scene.lookup("#binary");
         CheckBox hex = (CheckBox) scene.lookup("#hex");
 
-
+        // Conversion between binary and hex
         if (binary.isSelected()) { changeFormat("#binary"); currentFormat = "#binary"; }
         else { changeFormat("#hex"); currentFormat = "#hex"; }
 

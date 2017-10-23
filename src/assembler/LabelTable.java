@@ -1,5 +1,8 @@
 package assembler;
 
+/**
+ * Label Table keeps track of known labels
+ */
 public enum LabelTable {
 
     MAIN    ("main:")   ,
@@ -8,6 +11,10 @@ public enum LabelTable {
 
     private final String _value;
 
+    /**
+     *
+     * @param v value
+     */
     LabelTable (String v) {
         _value = v;
     }

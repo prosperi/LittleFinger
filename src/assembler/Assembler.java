@@ -3,6 +3,10 @@ package assembler;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
+/**
+ *
+ * Assembler class assembles provided source file and outputs machine code
+ */
 public class Assembler {
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_CYAN = "\u001B[36m";
@@ -15,6 +19,11 @@ public class Assembler {
     private String _output;
     private int _lc;
 
+    /**
+     *
+     * @param s - input file stream that is supposed to be assembled,
+     *          and parsed by Assembler
+     */
     public Assembler (Stream<String> s) {
 
         _source = new ArrayList<String>();
@@ -32,6 +41,11 @@ public class Assembler {
 
     }
 
+    /**
+     *
+     * @param s list of input file lines that are supposed to be assembled,
+     *          and parsed by Assembler
+     */
     public Assembler (ArrayList<String> s) {
         _source = s;
         _output = "";
@@ -43,6 +57,10 @@ public class Assembler {
 
     }
 
+    /**
+     *  Assemble provided file by scanning and parsing, throw exceptions on the way
+     * @return After assembling return machine language String representation
+     */
     public String assemble () {
         _source.forEach(value -> {
             scan(value);
@@ -63,6 +81,10 @@ public class Assembler {
         return _output;
     }
 
+    /**
+     *  Scan the line and check that it has legal syntax
+     * @param line - line that needs to be scanned
+     */
     void scan (String line) {
         try {
             _lexical_scanner.scan(line);
@@ -71,10 +93,20 @@ public class Assembler {
         }
     }
 
+    /**
+     *  Parse the line and get the machine code
+     * @param line that needs to be parsed
+     * @return parsed line
+     */
     public String parse (String line) {
         return _parser.parse(line);
     }
 
+    /**
+     *  Check parsed line for directives and labels
+     * @param parsed parsed line which is in machine language already
+     * @return true if line contained directive, false if it was just an instruction
+     */
     public boolean checkParsed (String parsed) {
         if (parsed.length() >= 4 && parsed.substring(0, 4).equals("pos:")) {
             lc(Integer.parseInt(parsed.split("pos:")[1]));
@@ -90,6 +122,12 @@ public class Assembler {
         return false;
     }
 
+    /**
+     *  Increase location counter while constructing
+     *  machine code, mainly used for formatting the output
+     * @param position current position
+     * @return new position
+     */
     public int lc (int position) {
 
         while (_lc < position) {
@@ -100,6 +138,10 @@ public class Assembler {
         return _lc;
     }
 
+    /**
+     *  Print parsed file in an organized way
+     * @return  formatted String representation of the parsed file
+     */
     public String  format () {
         String tmp = "";
         for (int i = 0; i < _output.length(); i++) {
@@ -113,6 +155,10 @@ public class Assembler {
         return _output;
     }
 
+    /**
+     *  Change align for assembler once .align directive is found
+     * @param i change align by provided argument
+     */
     public void align (int i) {
         System.out.println("Current Location: \t" + _lc + " and need divisible by: \t" + i);
         while (_lc % i != 0) {
@@ -122,8 +168,17 @@ public class Assembler {
         System.out.println("Current new Location: \t" + _lc);
     }
 
+    /**
+     *  Check found label with symbol table
+     * @param l label that was parsed
+     */
     public void label (String l) {
         _symbol_table.address(l, _lc);
     }
+
+    /**
+     *  Print the symbol table in an organized way
+     * @return String reresentation of symbol table
+     */
     public String st () { return _symbol_table.display(); }
 }

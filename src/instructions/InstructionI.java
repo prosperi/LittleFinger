@@ -9,6 +9,13 @@ public class InstructionI extends Instruction {
                     _rn,
                     _rd;
 
+    /**
+     *
+     * @param opcode opcode
+     * @param immediate immediate
+     * @param rn rn
+     * @param rd rd
+     */
     public InstructionI (String opcode, String immediate, String rn, String rd) {
         _opcode = opcode;
         _immediate = immediate;
@@ -16,6 +23,10 @@ public class InstructionI extends Instruction {
         _rd = rd;
     }
 
+    /**
+     *
+     * @param binary binary, reverse-engineer instruction
+     */
     public InstructionI (String binary) {
         _opcode = binary.substring(0, 10);
         _immediate = binary.substring(10, 22);

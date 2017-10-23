@@ -6,6 +6,10 @@ public class InstructionZ extends Instruction {
 
     private String  _opcode;
 
+    /**
+     *
+     * @param opcode
+     */
     public InstructionZ (String opcode) {
         _opcode = opcode;
     }

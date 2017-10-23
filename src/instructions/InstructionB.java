@@ -7,6 +7,11 @@ public class InstructionB extends Instruction {
     private String  _opcode,
             _address;
 
+    /**
+     *
+     * @param opcode opcode
+     * @param address address
+     */
     public InstructionB (String opcode, String address) {
         _opcode = opcode;
         _address = address;

@@ -8,6 +8,12 @@ public class InstructionCB extends Instruction {
             _address,
             _rt;
 
+    /**
+     *
+     * @param opcode opcode
+     * @param address address
+     * @param rt rt
+     */
     public InstructionCB (String opcode, String address, String rt) {
         _opcode = opcode;
         _address = address;

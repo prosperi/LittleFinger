@@ -10,6 +10,14 @@ public class InstructionD extends Instruction {
                     _rn,
                     _rt;
 
+    /**
+     *
+     * @param opcode opcode
+     * @param dt dt
+     * @param op opo
+     * @param rn rn
+     * @param rt rt
+     */
     public InstructionD (String opcode, String dt, String op, String rn, String rt) {
         _opcode = opcode;
         _dt = dt;
@@ -18,6 +26,10 @@ public class InstructionD extends Instruction {
         _rt = rt;
     }
 
+    /**
+     *
+     * @param binary binary, reverse-engineer instruction
+     */
     public InstructionD (String binary) {
         _opcode = binary.substring(0, 11);
         _dt = binary.substring(11, 20);

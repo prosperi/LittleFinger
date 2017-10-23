@@ -11,6 +11,14 @@ public class InstructionR extends Instruction {
                     _rd     ;
 
 
+    /**
+     *
+     * @param opcode
+     * @param rm
+     * @param shamt
+     * @param rn
+     * @param rd
+     */
     public InstructionR (String opcode, String rm, String shamt, String rn, String rd) {
         _opcode = opcode;
         _rm = rm;
@@ -19,6 +27,10 @@ public class InstructionR extends Instruction {
         _rd = rd;
     }
 
+    /**
+     *
+     * @param binary
+     */
     public InstructionR (String binary) {
         _opcode = binary.substring(0, 11);
         _rm = binary.substring(11, 16);

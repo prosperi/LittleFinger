@@ -1,5 +1,8 @@
 package assembler;
 
+/**
+ * OpcodeTable stores all the supported Mnemonics with their opcodes and instruction types
+ */
 public enum OpcodeTable {
 
     ADD     (new Mnemonic("ADD",     "R",    new Opcode(11, "00000011000")   )),
@@ -47,6 +50,10 @@ public enum OpcodeTable {
 
     private final Mnemonic _mnemonic;
 
+    /**
+     *
+     * @param i mnemonic
+     */
     OpcodeTable (Mnemonic i) {
         _mnemonic = i;
     }

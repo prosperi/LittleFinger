@@ -1,10 +1,19 @@
 package assembler;
 
+/**
+ * Mnemonic stores information about each supported mnemonic
+ */
 public class Mnemonic {
     private String _value;
     private String _format;
     private Opcode _opcode;
 
+    /**
+     *
+     * @param v value
+     * @param f format
+     * @param o opcode
+     */
     public Mnemonic(String v, String f, Opcode o) {
         _value = v;
         _format = f;

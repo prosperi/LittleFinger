@@ -6,6 +6,10 @@ import instructions.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Parser parses provided line and converts to machine code using regex
+ * and most of the classes in package assembler
+ */
 public class Parser {
 
     private String _header;
@@ -14,6 +18,11 @@ public class Parser {
         _header = "#hex";
     }
 
+    /**
+     *  Parse provided line, by checking regular expressions for directives, mnemonics and labels
+     * @param line line that needs to be converted to machine language
+     * @return  machine code for that line
+     */
     String parse (String line) {
         String parsed = "";
 
@@ -29,6 +38,11 @@ public class Parser {
         return "";
     }
 
+    /**
+     *  Parse the label
+     * @param line line that needs to be parsed for label
+     * @return empty String if no label, otherwise label: <label_name>
+     */
     String parseLabel (String line) {
         Pattern labelPattern = PatternTable.LABEL.pattern();
         Matcher matcher = labelPattern.matcher(line);
@@ -42,6 +56,11 @@ public class Parser {
         return "";
     }
 
+    /**
+     *  Parse Directive and generate machine code
+     * @param line line that needs to be parsed for directive
+     * @return empty String if directive was not found, otherwise parsed directive
+     */
     String parseDirective (String line) {
         Pattern directivePattern = PatternTable.DIRECTIVE.pattern();
         Matcher matcher = directivePattern.matcher(line);
@@ -86,6 +105,12 @@ public class Parser {
         return output;
     }
 
+    /**
+     * Parse mnemonic and find the type of instruction
+     * @param line line that needs to be checked for mnemonic
+     * @return empty String if line does not contain mnemonic,
+     * otherwise return machine code
+     */
     String parseMnemonic (String line) {
         Pattern mnemonicPattern = PatternTable.MNEMONIC.pattern();
         Matcher matcher = mnemonicPattern.matcher(line);
@@ -125,6 +150,12 @@ public class Parser {
         return "";
     }
 
+    /**
+     *  Handle R type instruction and generate machine code as an output
+     * @param line line that contains R type instruction
+     * @param mnemonic mnemonic that was found on that line
+     * @return machine code for provided line
+     */
     Instruction handleRType (String line, Mnemonic mnemonic) {
         String sh, rd, rn, rm;
         Matcher rType = PatternTable.R_TYPE.pattern().matcher(line);
@@ -147,6 +178,12 @@ public class Parser {
         return r;
     }
 
+    /**
+     *  Handle I type instruction and generate machine code as an output
+     * @param line line that contains I type instruction
+     * @param mnemonic mnemonic that was found on that line
+     * @return  machine code for provided line
+     */
     Instruction handleIType (String line, Mnemonic mnemonic) {
         Matcher iType = PatternTable.I_TYPE.pattern().matcher(line);
         iType.find();
@@ -159,6 +196,12 @@ public class Parser {
         return i;
     }
 
+    /**
+     *  Handle D type instruction and generate machine code as an output
+     * @param line line that contains D type instruction
+     * @param mnemonic mnemonic that was found on that line
+     * @return  machine code for provided line
+     */
     Instruction handleDType (String line, Mnemonic mnemonic) {
         Matcher dType = PatternTable.D_TYPE.pattern().matcher(line);
         dType.find();
@@ -173,6 +216,12 @@ public class Parser {
         return i;
     }
 
+    /**
+     *  Handle B type instruction and generate machine code as an output
+     * @param line line that contains B type instruction
+     * @param mnemonic mnemonic that was found on that line
+     * @return machine code for provided line
+     */
     Instruction handleBType (String line, Mnemonic mnemonic) {
         Matcher bType = PatternTable.B_TYPE.pattern().matcher(line);
         bType.find();
@@ -183,6 +232,12 @@ public class Parser {
         return i;
     }
 
+    /**
+     *  Handle Z type instruction and generate machine code as an output
+     * @param line line that contains Z type instruction
+     * @param mnemonic mnemonic that was found on that line
+     * @return machine code for provided line
+     */
     Instruction handleZType (String line, Mnemonic mnemonic) {
         Matcher zType = PatternTable.Z_TYPE.pattern().matcher(line);
         if (!zType.find()) {
@@ -194,6 +249,12 @@ public class Parser {
         return i;
     }
 
+    /**
+     * Handle CB type instruction and generate machine code as an output
+     * @param line line that contains CB type instruction
+     * @param mnemonic mnemonic that was found on that line
+     * @return machine code for provided line
+     */
     Instruction handleCBType (String line, Mnemonic mnemonic) {
         Matcher cbType = PatternTable.CB_TYPE.pattern().matcher(line);
         cbType.find();
@@ -205,6 +266,7 @@ public class Parser {
 
         return i;
     }
+
 
     public String header () {
         return this._header;

@@ -57,6 +57,10 @@ public class Main extends Application {
         launch(args);
     }
 
+    /**
+     * Setup stage, event handlers and simulation
+     * @param stage
+     */
     @Override
     public void start(Stage stage) {
 
@@ -86,7 +90,7 @@ public class Main extends Application {
             rect.setArcHeight(10);
             rect.setArcWidth(10);
 
-
+            // Assemble the source file and initialize CPU
             assemble.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
@@ -109,6 +113,7 @@ public class Main extends Application {
                 }
             });
 
+            // reset CPU
             reset.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
@@ -119,6 +124,7 @@ public class Main extends Application {
                 }
             });
 
+            // Execute a step in cpu
             step.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
@@ -132,6 +138,7 @@ public class Main extends Application {
                 }
             });
 
+            // Save Memory state and CPU state & config in a file
             save.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
@@ -160,10 +167,11 @@ public class Main extends Application {
         }
 
 
-
-
     }
 
+    /**
+     * Read provided input file and construct list of all the lines
+     */
     public static void readFile () {
         _source = new ArrayList<String>();
         _assembly = new ArrayList<String>();
@@ -180,6 +188,9 @@ public class Main extends Application {
     }
 
 
+    /**
+     * Load Memory and display in the grid
+     */
     public static void loadMemory () {
         chunks = new ArrayList<String>();
 
@@ -199,6 +210,11 @@ public class Main extends Application {
     }
 
 
+    /**
+     * Setup Memory based on the cpu main memory
+     * @param chunks
+     * @param start
+     */
     public static void setupMemory (ArrayList<String> chunks, int start) {
 
 
@@ -216,17 +232,26 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * Load Code in TextArea based on provided source file
+     */
     public static void loadCode () {
         for (int i = 0; i < _assembly.size(); i++) {
             code.appendText(_assembly.get(i) + "\n");
         }
     }
 
+    /**
+     * Set red rectangle on current location in memory
+     */
     public static void mark () {
         memory.getChildren().remove(rect);
         memory.add(rect, cpu.pc() % 8 + 1, cpu.pc() / 8);
     }
 
+    /**
+     * Setup Flags and show their values with registers
+     */
     public static void setupFlags () {
         ArrayList<String> tmp = cpu.config();
         GridPane flags = (GridPane) scene.lookup("#flags");
@@ -238,6 +263,9 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * Reset application
+     */
     public static void reset () {
         ((Node)scene.lookup("#halt")).setVisible(false);
         ((Pane) scene.lookup("#step")).setDisable(false);

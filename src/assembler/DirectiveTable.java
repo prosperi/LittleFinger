@@ -1,5 +1,8 @@
 package assembler;
 
+/**
+ * DirectiveTable keeps track of supported directives
+ */
 public enum DirectiveTable {
 
     WORDSIZE    (".wordsize")   ,
@@ -14,6 +17,10 @@ public enum DirectiveTable {
 
     private final String _value;
 
+    /**
+     *
+     * @param v value
+     */
     DirectiveTable (String v) {
         _value = v;
     }

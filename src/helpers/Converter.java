@@ -1,11 +1,19 @@
 package helpers;
 
+/**
+ * Converter class is used to cperform basic conversions between decimal, hex and binary
+ */
 public final class Converter {
 
     private Converter () {
 
     }
 
+    /**
+     * Convert Decimal to Binary
+     * @param decimal
+     * @return binary
+     */
     public static String decimalToBinary (int decimal) {
         String output = "";
         while (decimal > 0) {
@@ -17,6 +25,12 @@ public final class Converter {
         return reversed;
     }
 
+    /**
+     * Convert decimal to binary and generate "0" in front to match the provided size
+     * @param decimal
+     * @param size
+     * @return binary
+     */
     public static String decimalToBinary (int decimal, int size) {
         String binary = decimalToBinary(decimal);
 
@@ -27,6 +41,11 @@ public final class Converter {
         return binary;
     }
 
+    /**
+     * Convert binary to hex
+     * @param binary
+     * @return hex
+     */
     public static String binaryToHex (String binary) {
         String output = "";
         String hex = "0123456789ABCDEF";
@@ -42,18 +61,40 @@ public final class Converter {
         return output;
     }
 
+    /**
+     * convert hex to decimal
+     * @param h
+     * @return decimal
+     */
     public static int hexToDecimal (String h) {
         return Integer.parseInt(h, 16);
     }
 
+    /**
+     * convert hex to binary
+     * @param hex
+     * @return binary
+     */
     public static String hexToBinary (String hex) {
         return decimalToBinary(hexToDecimal(hex));
     }
 
+    /**
+     * Convert hex to binary
+     * @param hex
+     * @param size
+     * @return binary
+     */
     public static String hexToBinary (String hex, int size) {
         return decimalToBinary(hexToDecimal(hex), size);
     }
 
+    /**
+     * Format hex, by appending 0-s in front to match the provided size
+     * @param hex
+     * @param size
+     * @return
+     */
     public static String formatHex (String hex, int size) {
 
         if (hex.length() > size) return hex.substring(hex.length() - size, hex.length());
@@ -65,6 +106,11 @@ public final class Converter {
         return hex;
     }
 
+    /**
+     * Decimal to Hex
+     * @param decimal
+     * @return hex
+     */
     public static String decimalToHex (int decimal) {
         String output = "";
         String hex = "0123456789ABCDEF";

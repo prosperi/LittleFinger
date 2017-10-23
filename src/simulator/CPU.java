@@ -22,6 +22,10 @@ public class CPU {
     private int _rc, _mm, _ws;
     private boolean _halt;
 
+    /**
+     *
+     * @param source list of all the lines
+     */
     public CPU (ArrayList<String> source) {
         _source = source;
         _format = "";
@@ -37,6 +41,10 @@ public class CPU {
 
     }
 
+    /**
+     * execute the cpu steps till halt is set to true
+     * @return
+     */
     public boolean execute () {
         step();
         _pc += 4;
@@ -46,6 +54,9 @@ public class CPU {
         return true;
     }
 
+    /**
+     * Emulate cpu
+     */
     public void emulate () {
         while (!_halt) {
             step();
@@ -53,6 +64,9 @@ public class CPU {
         }
     }
 
+    /**
+     * Load Header based on provided object file
+     */
     void loadHeader () {
         System.out.println(_source.get(0));
         String[] tmp = _source.get(0).split(":");
@@ -73,6 +87,10 @@ public class CPU {
 
     }
 
+    /**
+     * Load memory based on provided object file, initialize
+     * memory object and store bytes
+     */
     void loadMemory () {
         _memory = new Memory(_mm);
 
@@ -81,6 +99,9 @@ public class CPU {
         }
     }
 
+    /**
+     * Load source from the provided object file
+     */
     void loadSource () {
         for (int i = 1; i < _source.size(); i++) {
             for (int j = 0; j < _source.get(i).length() - 1; j += 2) {
@@ -90,7 +111,9 @@ public class CPU {
         }
     }
 
-
+    /**
+     * Reset the the flags, program counter, halt, general purpose registers
+     */
     public void reset () {
         _pc = 0;    // program counter
         resetFlags();
@@ -99,6 +122,9 @@ public class CPU {
         _gpr = new ArrayList<String>();
     }
 
+    /**
+     * reset all the flags to intial values
+     */
     public void resetFlags () {
         _n = 0;     // negative
         _c = 0;     // carry
@@ -106,6 +132,10 @@ public class CPU {
         _v = 0;     // overflow
     }
 
+    /**
+     * Get the state of cpu in a nice and organized way
+     * @return String representation of the cpu
+     */
     public String toString () {
         String output = "";
 
@@ -131,6 +161,11 @@ public class CPU {
         return output;
     }
 
+    /**
+     *  Find which instruction is executed
+     * @param opcode
+     * @return opcode
+     */
     public OpcodeTable getOpcode (String opcode) {
         OpcodeTable[] opcodes = OpcodeTable.values();
 
@@ -141,6 +176,11 @@ public class CPU {
         return null;
     }
 
+    /**
+     * Proceed to next location and finish the current step, parse new instruction,
+     * reverse engineer new instruction and execute operation, print out results, and
+     * human visible representation of this operation
+     */
     public void step () {
        resetFlags();
 
@@ -386,6 +426,12 @@ public class CPU {
         System.out.println(this);
     }
 
+    /**
+     * perfomr ADDI operation
+     * @param a
+     * @param b
+     * @return
+     */
     public String addi (String a, String b) {
         String output = "";
 
@@ -398,7 +444,7 @@ public class CPU {
         a = new StringBuilder(a).reverse().toString();
         b = new StringBuilder(b).reverse().toString();
 
-
+        // check bit-by-bit
         for (int i = 0; i < a.length(); i++) {
             char tmp = b.length() > i ? b.charAt(i) : '0';
 
@@ -418,15 +464,24 @@ public class CPU {
         return new StringBuilder(output).reverse().toString();
     }
 
+    /**
+     * Perform SUBI operation
+     * @param a
+     * @param b
+     * @return binary result
+     */
     public String subi (String a, String b) {
         String output = "";
 
         System.out.println(a + " " + b);
 
+        // negation -> two's complement
         for (int i = 0; i < b.length(); i++) {
             if (b.charAt(i) == '0') output += "1";
             else output += "0";
         }
+
+        // bit by bit
         for (int i = b.length(); i < _ws; i++) {
             output = output.charAt(0) + output;
         }
@@ -437,6 +492,12 @@ public class CPU {
         return output;
     }
 
+    /**
+     * Logical AND
+     * @param a
+     * @param b
+     * @return binary
+     */
     public String and (String a, String b) {
         String output = "";
 
@@ -456,7 +517,12 @@ public class CPU {
         return output;
     }
 
-    // could be done with and and negation
+    /**
+     *  Logical OR
+     * @param a
+     * @param b
+     * @return binary
+     */
     public String orr (String a, String b) {
         String output = "";
 
@@ -476,6 +542,12 @@ public class CPU {
         return output;
     }
 
+    /**
+     * Logical Exclusive OR
+     * @param a
+     * @param b
+     * @return
+     */
     public String eor (String a, String b) {
         String output = "";
 
@@ -495,18 +567,42 @@ public class CPU {
         return output;
     }
 
+    /**
+     * ANDI Operation
+     * @param a
+     * @param b
+     * @return binary
+     */
     public String andi (String a, String b) {
         return and(a, b);
     }
 
+    /**
+     * ORRI operation
+     * @param a
+     * @param b
+     * @return binary
+     */
     public String orri (String a, String b) {
         return orr(a, b);
     }
 
+    /**
+     * EORI operation
+     * @param a
+     * @param b
+     * @return binary
+     */
     public String eori (String a, String b) {
         return eori(a, b);
     }
 
+    /**
+     * Left Shift operation
+     * @param a
+     * @param b
+     * @return
+     */
     public String lsl (String a, int b) {
         String output = a;
 
@@ -521,6 +617,12 @@ public class CPU {
         return output;
     }
 
+    /**
+     * Right Shift
+     * @param a
+     * @param b
+     * @return binary
+     */
     public String lsr (String a, int b) {
         String output = a;
         System.out.println(output + " " + output.substring(0, output.length() - 1));
@@ -540,6 +642,10 @@ public class CPU {
 
     public Memory memory () { return _memory; }
 
+    /**
+     * Provide string representation of the configuration and state of cpu
+     * @return list of all the config variables
+     */
     public ArrayList<String> config () {
         ArrayList<String> tmp = new ArrayList<String>();
 
