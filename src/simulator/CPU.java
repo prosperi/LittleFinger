@@ -655,7 +655,7 @@ public class CPU {
         }
 
         tmp.add("PC    ");
-        tmp.add("0x" + _pc * 2);
+        tmp.add("0x" + _pc);
         tmp.add("SP    ");
         tmp.add("0");
 

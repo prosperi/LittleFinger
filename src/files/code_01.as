@@ -10,7 +10,7 @@ main:
        AND      x0, x2, x3
        ORR      x0, x0, x2
        EOR      x1, x2, x3
-       LSL      x1, x1, 2
+       LSL     x1, x1, 2
        LSR      x1, x1, 2
        ADDIS    x1, x1, 4
        EOR      x1, x0, x2
@@ -25,13 +25,10 @@ main:
 
 ; this is a comment
 
-data:
-        .double 0x0AB     ; place 0xAB in a 8-byte location
-        .single 0x0AB     ; place 0xAB in a 4-byte location
+
         .half   0x0AB     ; place 0xAB in a 2-byte location
         .byte   0x0AB     ; place 0xAB in a 1-byte location
 
-; B data
 
 .pos 0x200                ; set the image location to 0x200
 stack:

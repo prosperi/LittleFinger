@@ -1,8 +1,6 @@
 package visualizer;
 
 import assembler.Assembler;
-import com.sun.tools.javac.comp.Check;
-import com.sun.tools.javac.util.Convert;
 import helpers.Converter;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -39,8 +37,12 @@ public class Main extends Application {
     private static Scene scene;
     private static ArrayList<String> chunks;
     private static String currentFormat;
+    private static String input;
 
     public static void main(String[] args) {
+        input = args[0];
+
+
         readSource();
 
         launch(args);
@@ -127,7 +129,6 @@ public class Main extends Application {
      * Read provided source file
      */
     public static void readSource () {
-        String input = "./src/out/code_01.o";
 
         try {
             source = Files.lines(Paths.get(input));

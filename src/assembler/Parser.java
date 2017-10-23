@@ -13,9 +13,11 @@ import java.util.regex.Pattern;
 public class Parser {
 
     private String _header;
+    private Assembler _asm;
 
-    public Parser () {
+    public Parser (Assembler asm) {
         _header = "#hex";
+        _asm = asm;
     }
 
     /**
@@ -226,7 +228,15 @@ public class Parser {
         Matcher bType = PatternTable.B_TYPE.pattern().matcher(line);
         bType.find();
 
-        String address = Converter.decimalToBinary(Integer.parseInt(bType.group(2)), 26);
+        String address = "";
+        try {
+            address = Converter.decimalToBinary(Integer.parseInt(bType.group(2)), 26);
+        } catch (NumberFormatException e) {
+            if (_asm.symbol(bType.group(2)) != -1)
+                address = Converter.decimalToBinary(_asm.symbol(bType.group(2)), 26);
+            else
+                address = mnemonic.mnemonic() + " " + bType.group(2);
+        }
 
         InstructionB i = new InstructionB(mnemonic.opcode().binary(), address);
         return i;
@@ -259,9 +269,32 @@ public class Parser {
         Matcher cbType = PatternTable.CB_TYPE.pattern().matcher(line);
         cbType.find();
 
-        String rt = Converter.decimalToBinary(Integer.parseInt(cbType.group(3)), 5);
-        String address = Converter.decimalToBinary(Integer.parseInt(cbType.group(5)), 19);
+        String address = "", rt = "";
+        try {
+            if (!cbType.group(5).equals("")) {
+                System.out.println("here");
+                rt = Converter.decimalToBinary(Integer.parseInt(cbType.group(3)), 5);
+                address = Converter.decimalToBinary(Integer.parseInt(cbType.group(5)), 19);
+            } else {
+                rt = "00000";
+                address = Converter.decimalToBinary(Integer.parseInt(cbType.group(3)), 19);
+            }
 
+        } catch (NumberFormatException e) {
+            if (_asm.symbol(cbType.group(5)) != -1){
+                if (!cbType.group(5).equals(""))
+                    address = Converter.decimalToBinary(_asm.symbol(cbType.group(5)), 19);
+                else
+                    address = Converter.decimalToBinary(Integer.parseInt(cbType.group(3)), 19);
+            } else {
+                if (!cbType.group(5).equals(""))
+                    address = mnemonic.mnemonic() + " " + cbType.group(3) + " " + cbType.group(5);
+                else
+                    address = mnemonic.mnemonic() + " " + cbType.group(5);
+            }
+        }
+
+        System.out.println("address: " + address + " mnemonic: " + mnemonic.opcode().binary() + "rt: " + rt);
         InstructionCB i = new InstructionCB(mnemonic.opcode().binary(), address, rt);
 
         return i;

@@ -25,6 +25,8 @@ public class InstructionCB extends Instruction {
     }
 
     public String hex () {
+        if (this.address().matches(".*[a-zA-Z].*")) return this._address;
+
         return Converter.binaryToHex(this.binary());
     }
 

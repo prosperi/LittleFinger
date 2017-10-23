@@ -23,7 +23,7 @@ public class SymbolTable {
      * @return
      */
     public int address (String symbol) {
-        return _symbols.get(symbol);
+        return _symbols.containsKey(symbol) ? _symbols.get(symbol) : -1;
     }
 
     // already exists, update status think about more errors

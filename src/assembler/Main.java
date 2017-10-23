@@ -20,8 +20,9 @@ import java.util.stream.Stream;
 public class Main {
     public static void main(String[] args) {
 
-        String input = "./src/files/code_01.as";
-        String destination = "./src/out/code_01.o";
+        String input = args[0];
+        String[] tmp = input.split("/");
+        String destination = "./out/" + tmp[tmp.length - 1].split("\\.")[0] + ".o";
 
         try (Stream<String> source = Files.lines(Paths.get(input))) {
 
@@ -31,6 +32,8 @@ public class Main {
             byte[] assembled = assembler.assemble().getBytes();
 
             Files.write(Paths.get(destination), assembled);
+
+            System.out.println("Total number of instructions, .double, .half, .byte and .single: " + assembler.counter());
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -2,12 +2,17 @@ package simulator;
 
 import assembler.Assembler;
 import helpers.Converter;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
@@ -16,12 +21,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import javax.xml.soap.Text;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.stream.Stream;
 
 public class Main extends Application {
@@ -44,13 +52,18 @@ public class Main extends Application {
     private static String inputAssembly;
 
     private static Rectangle rect;
+    private static boolean noisy;
+    private static Timer timer;
 
     public static void main(String[] args) {
 
-        inputAssembly = "./src/files/code_01.as";
+        inputAssembly = args[0];
         String[] tmp = inputAssembly.split("/");
-        input = "./src/out/" + tmp[tmp.length - 1].split("\\.")[0] + ".o";
+        input = "./out/" + tmp[tmp.length - 1].split("\\.")[0] + ".o";
         System.out.println(input);
+
+        if (args.length > 1 && args[1].equals("noisy")) noisy = true;
+        else noisy = false;
 
         readFile();
 
@@ -81,6 +94,8 @@ public class Main extends Application {
             Pane reset = (Pane) scene.lookup("#reset");
             Pane step = (Pane) scene.lookup("#step");
             Pane save = (Pane) scene.lookup("#save");
+            Pane run = (Pane) scene.lookup("#run");
+            Pane stop = (Pane) scene.lookup("#stop");
 
 
             rect = new Rectangle(0, 0, 20, 20);
@@ -100,7 +115,7 @@ public class Main extends Application {
                         source.forEach(value -> _source.add(value) );
                         ((TextArea) scene.lookup("#labels")).clear();
                         ((TextArea) scene.lookup("#labels")).appendText(assembler.st());
-                        System.out.println(assembler.st() + "done");
+                        if (noisy) System.out.println(assembler.st() + "done");
                         loadMemory();
 
 
@@ -117,7 +132,7 @@ public class Main extends Application {
             reset.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    System.out.println("here we go");
+                    if (noisy) System.out.println("here we go");
                     cpu.reset();
                     memory.getChildren().clear();
                     reset();
@@ -129,7 +144,7 @@ public class Main extends Application {
                 @Override
                 public void handle(MouseEvent event) {
                     if (!cpu.execute()){
-                        System.out.println("HALT");
+                        if (noisy) System.out.println("HALT");
                         scene.lookup("#halt").setVisible(true);
                         step.setDisable(true);
                     }
@@ -144,19 +159,55 @@ public class Main extends Application {
                 public void handle(MouseEvent event) {
                     try {
                         String[] tmp = inputAssembly.split("/");
-                        String destination = "./src/out/" + tmp[tmp.length - 1].split("\\.")[0] + "_new.o";
+                        String destination = "./out/" + tmp[tmp.length - 1].split("\\.")[0] + "_new.o";
 
                         byte[] output = (_source.get(0) + cpu.memory().state()).getBytes();
 
                         Files.write(Paths.get(destination), output);
 
-                        destination = "./src/out/" + tmp[tmp.length - 1].split("\\.")[0] + "_config.o";
+                        destination = "./out/" + tmp[tmp.length - 1].split("\\.")[0] + "_config.o";
                         output = (cpu.toString() + "\n" + cpu.config()) .getBytes();
 
                         Files.write(Paths.get(destination), output);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                }
+            });
+
+            run.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    ChoiceBox speed = (ChoiceBox) scene.lookup("#speed");
+                    timer = new Timer( );
+                    timer.scheduleAtFixedRate(new TimerTask() {
+
+                        @Override
+                        public void run() {
+                            Platform.runLater(() -> {
+                                System.out.println("Hello");
+                                if (!cpu.execute()) {
+                                    if (noisy) System.out.println("HALT");
+                                    scene.lookup("#halt").setVisible(true);
+                                    step.setDisable(true);
+                                    timer.cancel();
+                                }
+                                setupFlags();
+                                mark();
+                            });
+
+
+                        }
+                    }, 1000,500 * (speed.getSelectionModel().getSelectedIndex() + 2));
+
+
+                }
+            });
+
+            stop.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    timer.cancel();
                 }
             });
 
@@ -258,7 +309,7 @@ public class Main extends Application {
         flags.getChildren().clear();
 
          for (int i = 0; i < tmp.size(); i++) {
-            System.out.println(tmp.get(i) + " " + i / 2 + " " + i % 2);
+            if (noisy) System.out.println(tmp.get(i) + " " + i / 2 + " " + i % 2);
             flags.add(new Label(tmp.get(i)), i / 2, i % 2);
         }
     }

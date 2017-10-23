@@ -34,7 +34,13 @@ public enum OpcodeTable {
 
     CBZ     (new Mnemonic("CBZ",     "CB",   new Opcode(8,  "01100000")      )),
     CBNZ    (new Mnemonic("CBNZ",    "CB",   new Opcode(8,  "01100101")      )),
-    BCOND   (new Mnemonic("B.cond",  "CB",   new Opcode(8,  "01101000")      )),
+    BCOND   (new Mnemonic("BCOND",   "CB",   new Opcode(8,  "01101000")      )),
+    BEQ     (new Mnemonic("BEQ",     "CB",   new Opcode(8,  "11101000")      )),
+    BNE     (new Mnemonic("BEQ",     "CB",   new Opcode(8,  "11101001")      )),
+    BLT     (new Mnemonic("BEQ",     "CB",   new Opcode(8,  "11101010")      )),
+    BLE     (new Mnemonic("BEQ",     "CB",   new Opcode(8,  "11101011")      )),
+    BGT     (new Mnemonic("BEQ",     "CB",   new Opcode(8,  "11101100")      )),
+    BGE     (new Mnemonic("BEQ",     "CB",   new Opcode(8,  "11101101")      )),
 
     B       (new Mnemonic("B",       "B",    new Opcode(6,  "011011")        )),
     BR      (new Mnemonic("BR",      "R",    new Opcode(11, "01110010000")   )),

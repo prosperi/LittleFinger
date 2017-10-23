@@ -19,6 +19,8 @@ public class Assembler {
     private String _output;
     private int _lc;
 
+    private int _counter;
+
     /**
      *
      * @param s - input file stream that is supposed to be assembled,
@@ -29,9 +31,11 @@ public class Assembler {
         _source = new ArrayList<String>();
         _output = "";
         _lc = 0;
+        _counter = 0;
+
 
         _lexical_scanner = new LexicalScanner();
-        _parser = new Parser();
+        _parser = new Parser(this);
         _symbol_table = new SymbolTable();
 
         s.forEach(value -> {
@@ -52,7 +56,7 @@ public class Assembler {
         _lc = 0;
 
         _lexical_scanner = new LexicalScanner();
-        _parser = new Parser();
+        _parser = new Parser(this);
         _symbol_table = new SymbolTable();
 
     }
@@ -62,6 +66,7 @@ public class Assembler {
      * @return After assembling return machine language String representation
      */
     public String assemble () {
+        ArrayList<String> tmp = new ArrayList<String>();
         _source.forEach(value -> {
             scan(value);
 
@@ -69,6 +74,21 @@ public class Assembler {
 
             if (parsed.equals("")) return;
             if (checkParsed(parsed)) return;
+
+            System.out.println("Result " + value + " " + parsed);
+            tmp.add(parsed);
+            _lc += parsed.length() / 2;
+        });
+
+        _lc = 0;
+        _output = "";
+        tmp.forEach(value -> {
+            String parsed = value;
+            if (value.contains(" ")){
+                parsed = parse(value);
+            }
+
+            if (parsed.equals("")) return;
 
             _output += parsed;
             _lc += parsed.length() / 2;
@@ -119,6 +139,7 @@ public class Assembler {
             return true;
         }
 
+        _counter++;
         return false;
     }
 
@@ -144,9 +165,13 @@ public class Assembler {
      */
     public String  format () {
         String tmp = "";
+        int size = Integer.valueOf(_parser.header().split("0x")[1], 16);
+        for (int i = _output.length() / 2; i < size; i++) {
+            _output += "00";
+        }
+
         for (int i = 0; i < _output.length(); i++) {
             if (i % 16 == 0) tmp += "\n" + _output.charAt(i) ;
-            else if(i % 8 == 0) tmp += _output.charAt(i);
             else tmp += _output.charAt(i);
         }
 
@@ -176,9 +201,13 @@ public class Assembler {
         _symbol_table.address(l, _lc);
     }
 
+    public int symbol (String l) { return _symbol_table.address(l, _lc); }
+
     /**
      *  Print the symbol table in an organized way
      * @return String reresentation of symbol table
      */
     public String st () { return _symbol_table.display(); }
+
+    public int counter () { return _counter; }
 }

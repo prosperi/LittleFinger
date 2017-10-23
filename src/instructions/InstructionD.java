@@ -28,7 +28,7 @@ public class InstructionD extends Instruction {
 
     /**
      *
-     * @param binary binary, reverse-engineer instruction
+     * @param binary binary, reverse-engineer instruction5
      */
     public InstructionD (String binary) {
         _opcode = binary.substring(0, 11);
